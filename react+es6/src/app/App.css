@@ -1,0 +1,27 @@
+
+.box{
+  padding: 30px;
+}
+.tableBox{
+height: 90px;
+width: 90px;
+overflow: hidden;
+}
+.chessLine{
+  overflow: hidden;
+}
+.tables{
+width: 30px;
+height:30px;
+cursor: pointer;
+float: left;
+border: 1px solid #999;
+background: #fff;
+/* border: none;
+ */
+}
+a{
+  width: 300px;
+  float: left;
+  background: #999;
+}

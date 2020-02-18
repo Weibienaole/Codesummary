@@ -1,0 +1,38 @@
+
+.gameBox{
+  margin: 50px;
+  #chessBox{
+    height: 111px;
+    width: 111px;
+    .chessList{
+      width:35px;
+      height:35px;
+      background:#fff;
+      border: 1px solid #999;
+      float: left;
+      cursor: pointer;
+      text-align: center;
+      line-height: 35px;
+    }
+  }
+  .historyBox{
+    width: 130px;
+    .historyStep{
+      float: left;
+      width: 130px;
+      border: 1px solid #999;
+      background: #fff;
+      text-align: center;
+      height: 30px;
+      line-height: 30px;
+      cursor: pointer;
+    }
+  }
+}
+.active{
+  background: darkcyan;
+  border: 1px solid #fff;
+}
+.lineColor{
+  color: red;
+}

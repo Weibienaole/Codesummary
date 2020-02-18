@@ -1,0 +1,33 @@
+.formBox{
+  width: 300px;
+}
+.searchBox{
+  width:100%;
+}
+.showData{
+  width:100%
+}
+.titleName{
+  overflow: hidden;
+}
+.titleName > div{
+  float: left;
+}
+.title{
+  font-weight: bold;
+}
+.textL{
+  width:40%;
+}
+.textR{
+  width:60%;
+}
+.itemData{
+  overflow: hidden;
+}
+.itemData > div{
+  float: left;
+}
+.noMuch{
+  color:red;
+}
