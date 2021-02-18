@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function searchStrMax(s) {
+      let arr = [],
+        max = 0
+      for (let i = 0; i < s.length; i++) {
+        let index = arr.indexOf(s[i])
+        if (index !== -1) {
+          // 存在
+          arr.splice(0, index + 1)
+        }
+        arr.push(s[i])
+        max = Math.max(arr.length, max)
+      }
+      return max
+    }
+    // console.log(searchStrMax('abcabcbb'))
+    var findMedianSortedArrays = function (nums1, nums2) {
+      let arr = [...nums1, ...nums2]
+      arr = arr.sort((a, b) => a - b)
+      if (arr.length % 2 === 1 && arr.length > 1) {
+        return arr[(arr.length - 1) / 2]
+      } else if (arr.length === 1) return arr[0]
+      return (arr[(arr.length - 2) / 2] + arr[arr.length / 2]) / 2
+    }
+    // console.log(findMedianSortedArrays([1, 2], [3,4]))
+
+    var longestPalindrome = function (s) {
+      let arr = [],
+        max = 0
+      for (let i = 0; i < s.length; i++) {
+        if (arr.length === 0) {
+          arr.push({ str: s[i], idx: i })
+          continue
+        }
+        for (let j in arr) {
+          if (arr[j].str.indexOf(s[i]) !== -1) {
+            arr[j].str = s.slice(arr[j].idx, i)
+            console.log(arr[j], s[i], s, i)
+          } else {
+            // arr.push({ str: s[i], idx: i })
+          }
+        }
+      }
+    }
+    longestPalindrome('asdfgd')
+    // console.log()
+  </script>
+</html>

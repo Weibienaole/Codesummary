@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    <h3 class="h3"></h3>
+  </div>
+</body>
+</html>
+<script>
+
+  /*
+    Javascript中的链表
+
+    const list = {
+    head: {
+        value: 6
+        next: {
+            value: 10                                             
+            next: {
+                value: 12
+                next: {
+                    value: 3
+                    next: null  
+                    }
+                }
+            }
+        }
+    }
+}
+   */
+  // 模拟链表节点
+  const Node = function (el) {
+    this.el = el
+    this.next = null
+  }
+
+  class linkedList {
+    constructor() {
+      this.head = null
+      this.length = 0
+    }
+    // 返回 Boolean 长度是否为空
+    isEmpty(){
+      return this.length === 0
+    }
+    // 打印链表
+    stampList(){
+      let nodes = []
+      let current = this.head
+      while(current){
+        nodes.push(current.el)
+        current = current.next
+      }
+      return nodes.join('->')
+    }
+    // 查询链表元素
+    getElAt(position){
+      if(position < 0 || position >= this.length) return null
+      let current = this.head
+      for(let i = 0; i < position; i++){
+        current = current.next
+      }
+      return current
+    }
+    // 追加
+    append(el){
+      let node = new Node(el)
+      if(this.head === null) this.head = node
+      else {
+        let current = this.getElAt(this.length - 1)
+        current.next = node
+      }
+      this.length++
+    }
+    // 插入
+    insert(position, el){
+      if(position < 0 || position >= this.length) return false
+      let node = new Node(el)
+      if(position === 0){
+        node.next = this.head
+        this.head = node
+      } else {
+        let previous = this.getElAt(position - 1)
+        node.next = previous.next
+        previous.next = node
+      }
+      this.length++
+      return true
+    }
+    // 根据索引删除
+    removeAt(position){
+      if(position < 0 || position >= this.length) return false
+      let removeNode = this.getElAt(position)
+      let current = this.head
+      if(position === 0) this.head = current.next
+      else {
+        let previous = this.getElAt(position - 1)
+        previous.next = removeNode.next
+      }
+      this.length--
+      return removeNode.el
+    }
+    // 查询下标
+    indexOf(el){
+      let current = this.head
+      for(let i = 0;i < this.length; i++){
+        if(current.el === el) return i
+        current = current.next
+      }
+      return -1
+    }
+    // 根据 el 删除
+    remove(el){
+      let idx = this.indexOf(el)
+      return this.removeAt(idx)
+    }
+    // 是否为空
+    empty(){
+      return this.length === 0
+    }
+    // 长度
+    size(){
+      return this.length
+    }
+    // 拿到头值
+    getHead(){
+      return this.head
+    }
+    // 清空链表
+    clear(){
+      this.head = null
+      this.length = 0
+      return true
+    }
+    // 打印链表
+    toString(){
+      let current = this.head
+      let s = ''
+      while(current){
+        let next = current.next
+        next = next ? next.el : 'null'
+        s += `[el: ${current.el}, next: ${next}]`
+        current = current.next
+      }
+      return s
+    }
+  }
+  let newList = new linkedList()
+  newList.append(12)
+  newList.append(90)
+  newList.append(61)
+  console.log(newList.toString(), newList)
+  newList.insert(2, 'insttr222')
+  newList.insert(0, 'woshicharu')
+  console.log(newList.toString(), newList)
+  newList.removeAt(3)
+  console.log(newList.toString(), newList)
+  console.log(newList.size(), 'size')
+  console.log(newList.empty(), 'empty')
+  console.log(newList.getHead(), 'getHead')
+  newList.remove(12)
+  console.log(newList.toString())
+  console.log(newList.getElAt(2))
+  console.log(newList.stampList())
+  
+
+
+</script>
