@@ -175,21 +175,6 @@
   }
   // console.log(findSame_k(strArr_k))
 
-  // 11 数组去重
-  let arr_l = [1, 2, 3, 4, 1, 2, 3]
-  const onlyList = arr => {
-    return arr.reduce((pre, cur, index) => {
-      if (pre.find(c => {
-        console.log(c.from);
-        return c.from === cur.from && c.to === cur.to
-      })) {
-        return pre
-      } else {
-        return [...pre, cur]
-      }
-    }, [])
-  }
-  console.log(onlyList(arr_l));
 
 </script>
 
