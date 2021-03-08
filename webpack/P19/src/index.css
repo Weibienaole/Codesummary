@@ -1,0 +1,13 @@
+body{
+  background: #afaf;
+  /* transform: rotate(45deg); */
+}
+.imgg{
+  width: 100px;
+  height: 100px;
+  background-size: 100px, 100px;
+}
+img{
+  width: 400px;
+  height: 400px;
+}

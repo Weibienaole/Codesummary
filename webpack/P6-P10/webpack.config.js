@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyjsPlugin = require('uglifyjs-webpack-plugin')
+const webpack = require('webpack')
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
@@ -22,6 +23,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
+      title: 'my app',
       // minify: {
       //   removeAttributeQuotes: true,
       //   collapseInlineTagWhitespace: true
@@ -32,18 +34,55 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'main.css'
     }),
+    // new webpack.ProvidePlugin({ // 每个模块中都注入jquery
+    //   $: 'jquery'
+    // })
   ],
+  // externals:{
+  //   jquery: '$'
+  // },
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        use: ['html-withimg-loader']
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [{
+          loader: 'url-loader',
+          options:{
+            limit: 200 * 1024
+          }
+        }]
+      },
+      // {
+      //   test: require.resolve('jquery'),
+      //   loader: 'expose-loader',
+      //   options: {
+      //     exposes: ['$', 'jQuery']
+      //   }
+      // },
+      // {
+      //   test: /\.js$/,
+      //   use:[{
+      //     loader: 'eslint-loader',
+      //     options:{
+      //       enforce: 'pre'
+      //     }
+      //   }]
+      // },
       {
         test: /\.js$/,
         use: [{
           loader: 'babel-loader',
-          options:{
-            presets:['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties']
-          }
-        }]
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
+          },
+        }],
+        include: path.resolve(__dirname, 'src'),
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
@@ -58,8 +97,8 @@ module.exports = {
     ]
   },
   // 优化项
-  optimization:{
-    minimizer:[new OptimizeCssPlugin(), new UglifyjsPlugin({
+  optimization: {
+    minimizer: [new OptimizeCssPlugin(), new UglifyjsPlugin({
       cache: true, // 使用缓存
       parallel: true, // 并行打包
       sourceMap: true // 源码映射
