@@ -1,5 +1,5 @@
 {
-  "name": "P19",
+  "name": "P20",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -8,6 +8,7 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-transform-runtime": "^7.13.9",
     "@babel/preset-env": "^7.13.9",
+    "@babel/preset-react": "^7.12.13",
     "autoprefixer": "^8.5.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
@@ -29,18 +30,20 @@
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^4.1.0",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "build_dev": "webpack --config webpack.dev.js",
-    "build_prod": "webpack --config webpack.prod.js",
+    "build": "webpack",
+    "buildReact": "webpack --config webpack.react.js",
     "dev": "webpack-dev-server"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@babel/runtime": "^7.13.9",
     "bootstrap": "^4.6.0",
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

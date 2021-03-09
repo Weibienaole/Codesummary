@@ -3,9 +3,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const webpack = require('webpack')
 module.exports = {
-  mode: 'production',
   entry: './src/index.js',
   devServer: {
     port: 8080,
@@ -26,9 +24,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/main.css'
     }),
-    new webpack.DefinePlugin({
-      BASE_API: JSON.stringify('dev')
-    })
   ],
   module: {
     rules: [
