@@ -63,22 +63,22 @@ module.exports = {
       //     exposes: ['$', 'jQuery']
       //   }
       // },
-      // {
-      //   test: /\.js$/,
-      //   use:[{
-      //     loader: 'eslint-loader',
-      //     options:{
-      //       enforce: 'pre'
-      //     }
-      //   }]
-      // },
+      {
+        test: /\.js$/,
+        use:[{
+          loader: 'eslint-loader',
+          options:{
+            enforce: 'pre' // 优先执行
+          }
+        }]
+      },
       {
         test: /\.js$/,
         use: [{
-          loader: 'babel-loader',
+          loader: 'babel-loader', // 添加loader项
           options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
+            presets: ['@babel/preset-env'], // 添加预设
+            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'] // 添加插件
           },
         }],
         include: path.resolve(__dirname, 'src'),

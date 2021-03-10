@@ -3,8 +3,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const Happypack = require('happypack')
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.js',
   devServer: {
     port: 3000,
@@ -15,17 +16,25 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  // 存放所有的插件
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      // template: './src/index.html',
       filename: 'index.html',
-      title: 'my app',
       hash: true
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/main.css' // 输出到指定文件夹
+      filename: 'css/main.css'
     }),
+    // 启动多线程进行打包，在大项目中效果明显
+    new Happypack({
+      id: 'js',
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+        },
+      }]
+    })
   ],
   module: {
     rules: [
@@ -37,32 +46,26 @@ module.exports = {
         test: /\.(png|jpg|jpeg|gif)$/,
         use: [{
           loader: 'url-loader',
-          options:{
+          options: {
             limit: 1,
             outputPath: '/image/', // 输出到指定文件夹
-            // publicPath: 'www.weibienoale@163.com', // 给打包后的图片都加一个前缀
+            // publicPath: 'www.aa'
           }
         }]
       },
       {
         test: /\.js$/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']
-          },
-        }],
-        include: path.resolve(__dirname, 'src'),
-        exclude: /node_modules/
+        use: 'happypack/loader?id=js', // 有可能会是css也进行多线程，所以需要设置id
+        include: path.resolve(__dirname, 'src'), // 包含
+        exclude: /node_modules/, // 排除
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
       }
     ]
   },
