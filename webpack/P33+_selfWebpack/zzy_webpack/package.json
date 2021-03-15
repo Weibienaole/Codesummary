@@ -1,0 +1,9 @@
+{
+  "name": "zzy_webpack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "zzy_webpack": "./bin/zzy_webpack.js"
+  }
+}
