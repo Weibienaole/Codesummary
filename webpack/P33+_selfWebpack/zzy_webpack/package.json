@@ -5,5 +5,12 @@
   "license": "MIT",
   "bin": {
     "zzy_webpack": "./bin/zzy_webpack.js"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.13.9",
+    "@babel/traverse": "^7.13.0",
+    "@babel/types": "^7.13.0",
+    "babylon": "^6.18.0",
+    "ejs": "^3.1.6"
   }
 }
