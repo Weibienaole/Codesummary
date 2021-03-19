@@ -5,7 +5,7 @@ function loader(source){
   less.render(source, function(err, e){
     code = e.css
   })
-  // code = code.replace(/\n/g, '\\n');
+  code = code.replace(/\n/g, '\\n');
   return code
 }
 module.exports = loader
