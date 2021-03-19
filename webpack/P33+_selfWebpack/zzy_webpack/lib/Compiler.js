@@ -17,7 +17,22 @@ class Compiler {
   // 解析
   getSource(modulePath) {
     // 通过fs解析拿到utf-8的源码
-    return fs.readFileSync(modulePath, 'utf8')
+    let content = fs.readFileSync(modulePath, 'utf8')
+    let rules = this.config.module.rules
+    for (let i in rules) {
+      let rule = rules[i]
+      let { test, use } = rule
+      let len = use.length - 1
+      if (test.test(modulePath)) {
+        function normalLoader() {
+          let loader = require(use[len--])
+          content = loader(content)
+          if(len >= 0) normalLoader()
+        }
+        normalLoader()
+      }
+    }
+    return content
   }
   //  模块打包  参数一为模块的完整路径 二为是否为主模块
   buildModule(modulePath, isEntry) {
@@ -74,7 +89,7 @@ class Compiler {
     // 拿到ejs模版内容
     let templateStr = this.getSource(path.resolve(__dirname, 'template.ejs'))
     // 通过ejs进行渲染，拿到成品
-    let code = ejs.render(templateStr, {entryId: this.entryId, modules: this.modules})
+    let code = ejs.render(templateStr, { entryId: this.entryId, modules: this.modules })
     // 用于多页面
     this.asstes = {}
     this.asstes[main] = code
