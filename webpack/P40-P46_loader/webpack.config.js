@@ -16,11 +16,35 @@ module.exports = {
   },
   module: {
     rules: [
+      // loader 的执行顺序一般是从左到右，从下到上
+      /*
+      有四种执行顺序
+      pre 最前 ->
+      nomal 普通loader ->
+      inline-loader 行内loader ->
+        具体看a.js
+      post 最后
+      */ 
+
       {
         test: /\.js$/,
         // 写法一 直接找到绝对路径
         // use: [path.resolve(__dirname, 'loader', 'loader1')]
-        use: ['loader1']
+        use: ['loader1'],
+        enforce: 'pre'
+      },
+      {
+        test: /\.js$/,
+        // 写法一 直接找到绝对路径
+        // use: [path.resolve(__dirname, 'loader', 'loader1')]
+        use: ['loader2']
+      },
+      {
+        test: /\.js$/,
+        // 写法一 直接找到绝对路径
+        // use: [path.resolve(__dirname, 'loader', 'loader1')]
+        use: ['loader3'],
+        enforce: 'post'
       }
     ]
   }
