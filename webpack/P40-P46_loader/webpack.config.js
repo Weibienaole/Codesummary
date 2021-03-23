@@ -17,19 +17,33 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
-      // P43
+      // P44
       {
-        test: /\.js$/,
-        use: [
-          {
-            loader: 'banner-loader',
-            options: {
-              filename: path.resolve(__dirname, 'bannerTxt.js'),
-              text: 'Monica`s'
-            }
+        test: /\.png$/,
+        use:[{
+          loader: 'url-loader',
+          options:{
+            limit: 2000
           }
-        ]
+        }]
       },
+      // {
+      //   test: /\.png$/,
+      //   use:['file-loader']
+      // },
+      // P43
+      // {
+      //   test: /\.js$/,
+      //   use: [
+      //     {
+      //       loader: 'banner-loader',
+      //       options: {
+      //         filename: path.resolve(__dirname, 'bannerTxt.js'),
+      //         text: 'Monica`s'
+      //       }
+      //     }
+      //   ]
+      // },
       // P42
       // {
       //   test: /\.js$/,
