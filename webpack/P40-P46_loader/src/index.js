@@ -1,5 +1,6 @@
 console.log('aaa');
 
+// P41
 // !前添加 inline-loader 为设置行内loader
 // 在这些之前再添加 -! 为不执行 pre 和 nomalLoader
 // 只添加 ! 为不执行 nomalLoader
@@ -7,6 +8,7 @@ console.log('aaa');
 
 // console.log(str);
 
+// P43
 class Arthas{
   constructor(){
     this.name = 'i am Arthas'
