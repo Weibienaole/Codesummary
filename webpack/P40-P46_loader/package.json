@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "loader-utils": "^2.0.0",
+    "schema-utils": "^3.0.0",
     "webpack": "4.32.2",
     "webpack-cli": "3.3.12"
   }
