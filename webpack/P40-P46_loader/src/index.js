@@ -20,7 +20,12 @@ class Arthas{
 let a = new Arthas
 // console.log(a.getName())
 
-import p from './pic.png'
-let img = document.createElement('img')
-img.src = p
-document.body.appendChild(img)
+// P44
+// import p from './pic.png'
+// let img = document.createElement('img')
+// img.src = p
+// document.body.appendChild(img)
+
+
+// P45
+require('./index.less')

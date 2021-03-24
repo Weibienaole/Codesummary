@@ -17,12 +17,17 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
+      // P45
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
+      },
       // P44
       {
         test: /\.png$/,
-        use:[{
+        use: [{
           loader: 'url-loader',
-          options:{
+          options: {
             limit: 2000
           }
         }]
