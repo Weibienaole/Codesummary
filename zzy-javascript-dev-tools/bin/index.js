@@ -1,1 +1,0 @@
-module.exports = 'zzy test 1'
