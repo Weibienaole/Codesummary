@@ -144,10 +144,12 @@ class DevTools {
     if (url.slice(url.length - 2, url.length) === '#/') {
       url = url.slice(0, url.length - 2)
     }
-    return url.split('?')[1].split('&').map(item => {
+    let o = {}
+    url.split('?')[1].split('&').map(item => {
       let r = item.split('=')
-      return { [item.split('=')[0]]: r[1] }
+      o[item.split('=')[0]] = r[1]
     })
+    return o
   }
 
   // 上传文件
@@ -231,6 +233,14 @@ class DevTools {
         }, false);
       }
     })(375, 750);
+  }
+
+  // 生产环境不显示 console.log
+  rewirteLog() {
+    console.log = (function (log) {
+      // webpack.config.js 中必须设置好正确的 mode
+        return process.env.NODE_ENV == 'development'? log : function() {}
+    }(console.log))
   }
 
 

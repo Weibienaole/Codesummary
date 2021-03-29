@@ -91,7 +91,7 @@ formatNowTime(time)
 
 该参数接受一个正确的url地址
 
-返回一个二维数组 [[参数名: 对应的值],[...]]
+返回一个对象 {参数名: 对应的值, ...}
 
 - 上传文件 uploadImage({url, file})
 
