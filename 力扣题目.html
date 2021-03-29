@@ -1,56 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
-  <script>
-    function searchStrMax(s) {
-      let arr = [],
-        max = 0
-      for (let i = 0; i < s.length; i++) {
-        let index = arr.indexOf(s[i])
-        if (index !== -1) {
-          // 存在
-          arr.splice(0, index + 1)
-        }
-        arr.push(s[i])
-        max = Math.max(arr.length, max)
-      }
-      return max
-    }
-    // console.log(searchStrMax('abcabcbb'))
-    var findMedianSortedArrays = function (nums1, nums2) {
-      let arr = [...nums1, ...nums2]
-      arr = arr.sort((a, b) => a - b)
-      if (arr.length % 2 === 1 && arr.length > 1) {
-        return arr[(arr.length - 1) / 2]
-      } else if (arr.length === 1) return arr[0]
-      return (arr[(arr.length - 2) / 2] + arr[arr.length / 2]) / 2
-    }
-    // console.log(findMedianSortedArrays([1, 2], [3,4]))
 
-    var longestPalindrome = function (s) {
-      let arr = [],
-        max = 0
-      for (let i = 0; i < s.length; i++) {
-        if (arr.length === 0) {
-          arr.push({ str: s[i], idx: i })
-          continue
-        }
-        for (let j in arr) {
-          if (arr[j].str.indexOf(s[i]) !== -1) {
-            arr[j].str = s.slice(arr[j].idx, i)
-            console.log(arr[j], s[i], s, i)
-          } else {
-            // arr.push({ str: s[i], idx: i })
-          }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body></body>
+<script>
+  function searchStrMax(s) {
+    let arr = [],
+      max = 0
+    for (let i = 0; i < s.length; i++) {
+      let index = arr.indexOf(s[i])
+      if (index !== -1) {
+        // 存在
+        arr.splice(0, index + 1)
+      }
+      arr.push(s[i])
+      max = Math.max(arr.length, max)
+    }
+    return max
+  }
+  // console.log(searchStrMax('abcabcbb'))
+  var findMedianSortedArrays = function (nums1, nums2) {
+    let arr = [...nums1, ...nums2]
+    arr = arr.sort((a, b) => a - b)
+    if (arr.length % 2 === 1 && arr.length > 1) {
+      return arr[(arr.length - 1) / 2]
+    } else if (arr.length === 1) return arr[0]
+    return (arr[(arr.length - 2) / 2] + arr[arr.length / 2]) / 2
+  }
+  // console.log(findMedianSortedArrays([1, 2], [3,4]))
+
+  var longestPalindrome = function (s) {
+    let arr = [],
+      max = 0
+    for (let i = 0; i < s.length; i++) {
+      if (arr.length === 0) {
+        arr.push({ str: s[i], idx: i })
+        continue
+      }
+      for (let j in arr) {
+        if (arr[j].str.indexOf(s[i]) !== -1) {
+          arr[j].str = s.slice(arr[j].idx, i)
+          console.log(arr[j], s[i], s, i)
+        } else {
+          // arr.push({ str: s[i], idx: i })
         }
       }
     }
-    longestPalindrome('asdfgd')
-    // console.log()
-  </script>
+  }
+  longestPalindrome('asdfgd')
+  // console.log()
+
+  /**
+* @param {string} s
+* @return {number}
+*/
+  var lengthOfLongestSubstring = function (str) {
+    let idx = 0
+    let obj = {}
+    // splitStrFn(null, str)
+
+    function splitStrFn(t = null, lastS) {
+      let first, splitNextStr, next, splitStr
+      if (!t) {
+        first = lastS[idx]
+        splitNextStr = lastS.slice(idx + 1, lastS.length)
+        next = splitNextStr.indexOf(first)
+        splitStr = lastS.slice(first, next + 1)
+      }
+      let targetStr = t || splitStr
+      let arrStr = lastS.split('')
+      let lastArr = [...arrStr]
+      let ss = lastArr.splice(first, next ? next + 1 : t.length)
+      if (ss.join('') === t) obj[targetStr] = obj[targetStr] ? obj[targetStr] + 1 : 1
+      console.log(targetStr, lastArr.join(''), obj, ss);
+
+      if (lastArr.join('').indexOf(targetStr) !== -1) splitStrFn(targetStr, lastArr.join(''))
+    }
+
+    splitStrFn2()
+    function splitStrFn2(t = null, index = 0, idx = 0, lastStr = str) {
+      let first, splitNextStr, next, splitStr
+      if (index === idx) {
+        first = str[index]
+        if(!first)return
+        splitNextStr = str.slice(idx + 1, str.length)
+        next = splitNextStr.indexOf(first)
+        splitStr = str.slice(index, next + 1)
+        console.log(splitStr, splitNextStr, first, next);
+        if(splitStr === -1) return splitStrFn2(null, index + 1, index + 1, str)
+        // if(obj[splitStr]) return splitStrFn2(null, index + 1, index + 1, str)
+        obj[splitStr] = 1
+        splitStrFn2(splitStr, index, idx + splitStr.length - 1, splitNextStr)
+      } else {
+        lastStr = lastStr.split('')
+        lastStr.splice(0, idx)
+        lastStr = lastStr.join('')
+        let nextIdx = lastStr.indexOf(t)
+        // console.log(nextIdx, lastStr, t);
+        if (nextIdx !== -1) {
+          obj[t] = ++obj[t]
+          splitStrFn2(t, index, idx + t.length - 1, lastStr)
+        } else if((index < str.length - 1) ){
+          let nextIndex = ++index
+          splitStrFn2(null, nextIndex, nextIndex, str)
+        }
+      }
+      // console.log(t, index, idx, lastStr);
+
+      /*
+     
+      */
+    }
+
+    return obj
+  };
+
+  console.log(lengthOfLongestSubstring("abcabcbb"))
+</script>
 </html>
