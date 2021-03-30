@@ -139,13 +139,21 @@ class DevTools {
       : 'Desktop';
   }
 
+  isAndroidPlatform(){
+    const u = navigator.userAgent
+    const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+    return isAndroid
+  }
+
   // 获取地址栏参数
   getUrlData(url) {
     if (url.slice(url.length - 2, url.length) === '#/') {
       url = url.slice(0, url.length - 2)
     }
     let o = {}
-    url.split('?')[1].split('&').map(item => {
+    let params = url.split('?')[1]
+    if(!params) return {}
+    params.split('&').map(item => {
       let r = item.split('=')
       o[item.split('=')[0]] = r[1]
     })

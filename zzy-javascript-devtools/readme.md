@@ -87,6 +87,10 @@ formatNowTime(time)
 
 返回一个 String 'Mobile' -> 移动端  'Desktop' -> PC端
 
+- 当前设备是否为 安卓端  isAndroidPlatform()
+
+返回一个 Boolean true -> Android  false -> iOS
+
 - 获取地址栏参数 getUrlData(url)
 
 该参数接受一个正确的url地址

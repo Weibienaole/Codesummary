@@ -21,9 +21,10 @@
       arr.push(s[i])
       max = Math.max(arr.length, max)
     }
+    console.log(arr);
     return max
   }
-  // console.log(searchStrMax('abcabcbb'))
+  // console.log(searchStrMax('abcabcb'))
   var findMedianSortedArrays = function (nums1, nums2) {
     let arr = [...nums1, ...nums2]
     arr = arr.sort((a, b) => a - b)
@@ -61,65 +62,78 @@
 */
   var lengthOfLongestSubstring = function (str) {
     let idx = 0
-    let obj = {}
-    // splitStrFn(null, str)
-
-    function splitStrFn(t = null, lastS) {
-      let first, splitNextStr, next, splitStr
-      if (!t) {
-        first = lastS[idx]
-        splitNextStr = lastS.slice(idx + 1, lastS.length)
-        next = splitNextStr.indexOf(first)
-        splitStr = lastS.slice(first, next + 1)
-      }
-      let targetStr = t || splitStr
-      let arrStr = lastS.split('')
-      let lastArr = [...arrStr]
-      let ss = lastArr.splice(first, next ? next + 1 : t.length)
-      if (ss.join('') === t) obj[targetStr] = obj[targetStr] ? obj[targetStr] + 1 : 1
-      console.log(targetStr, lastArr.join(''), obj, ss);
-
-      if (lastArr.join('').indexOf(targetStr) !== -1) splitStrFn(targetStr, lastArr.join(''))
-    }
-
+    let filalyArr = []
+    if (!str) return 0
+    if (str.length === 1) return 1
     splitStrFn2()
-    function splitStrFn2(t = null, index = 0, idx = 0, lastStr = str) {
+    function splitStrFn2(index = 0) {
       let first, splitNextStr, next, splitStr
-      if (index === idx) {
-        first = str[index]
-        if(!first)return
-        splitNextStr = str.slice(idx + 1, str.length)
-        next = splitNextStr.indexOf(first)
-        splitStr = str.slice(index, next + 1)
-        console.log(splitStr, splitNextStr, first, next);
-        if(splitStr === -1) return splitStrFn2(null, index + 1, index + 1, str)
-        // if(obj[splitStr]) return splitStrFn2(null, index + 1, index + 1, str)
-        obj[splitStr] = 1
-        splitStrFn2(splitStr, index, idx + splitStr.length - 1, splitNextStr)
-      } else {
-        lastStr = lastStr.split('')
-        lastStr.splice(0, idx)
-        lastStr = lastStr.join('')
-        let nextIdx = lastStr.indexOf(t)
-        // console.log(nextIdx, lastStr, t);
-        if (nextIdx !== -1) {
-          obj[t] = ++obj[t]
-          splitStrFn2(t, index, idx + t.length - 1, lastStr)
-        } else if((index < str.length - 1) ){
-          let nextIndex = ++index
-          splitStrFn2(null, nextIndex, nextIndex, str)
-        }
-      }
-      // console.log(t, index, idx, lastStr);
+      // 当前第一位  启动下标点
+      first = str[index]
+      // 如果undefined，说明已达到临界值，结束递归
+      if (!first) return
+      // 排除第一位，拿到剩余str
+      splitNextStr = str.slice(index + 1)
+      // 在剩余str中拿到下一个匹配启动下标点的下标
+      next = splitNextStr.indexOf(first)
+      // 如果等于 -1 说明当前str有且只有一项 first filalyArr push
+      if (next === -1) {
+        let newAr = str.split('')
+        newAr.splice(0, index)
+        let sliceStr = ''
+        // this.nowIdx = 0
+        let b = newAr.reduce((sur, pre, idx) => {
+          // console.log(sur, pre, idx, newAr);
+          if (sur.indexOf(pre) === -1) {
+            sliceStr = sur + pre
+            this.nowIdx = idx || 1 + index
+          } else {
+            // console.log(sur, pre, idx);
+            this.nowIdx = idx || 1 + index
+            newAr.splice(idx + 1)
+            return sur
+          }
+          return sliceStr
+        })
+        // console.log(b, first, 'sliceStr', this.nowIdx, index);
 
-      /*
-     
-      */
+        filalyArr.filter(item => item === b).length === 0 && filalyArr.push(b)
+        return splitStrFn2(++index)
+      } else {
+        // 拿到首次匹配到的str 也就是目标str -> t
+        splitStr = str.slice(index, next + index + 1)
+        // 如果filalyArr中已有当前匹配项,或者有重复字符，直接跳过，进行下一个
+        let { bol, seleI } = isEvery(splitStr)
+        if(seleI !== -1){
+          console.log(bol, index, seleI);
+          filalyArr.push(splitStr.slice(index, seleI + 1))
+        }
+        if ((filalyArr.indexOf(splitStr) !== -1) || !bol) return splitStrFn2(++index)
+        filalyArr.push(splitStr)
+      }
+      // 已当前目标str进行下一小轮的匹配  t
+      splitStrFn2(++index)
     }
 
-    return obj
-  };
+    function isEvery(s) {
+      let newA = [...s.split('')], seleI = -1
+      let bol = newA.every((item, index) => {
+        let newA1 = [...newA]
+        newA1.splice(index, 1)
+        if (newA1.indexOf(item) !== -1) {
+          seleI = newA1.indexOf(item)
+        }
+        return newA1.indexOf(item) === -1
+      })
+      return { bol, seleI }
+    }
+    console.log(filalyArr, 'filalyArr', str);
 
-  console.log(lengthOfLongestSubstring("abcabcbb"))
+    filalyArr = filalyArr.map(item => item.length)
+    filalyArr = filalyArr.sort((a, b) => b - a)
+    return filalyArr[0]
+  };
+  console.log(lengthOfLongestSubstring("zwnigfunjwz")) // au abb bacbacbb bbbbb pwwkew abb ohvhjdml jxdlnaaij zwnigfunjwz
 </script>
+
 </html>
