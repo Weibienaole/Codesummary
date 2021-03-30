@@ -56,84 +56,25 @@
   longestPalindrome('asdfgd')
   // console.log()
 
-  /**
-* @param {string} s
-* @return {number}
-*/
+
+  // 3. 滑动窗口
   var lengthOfLongestSubstring = function (str) {
-    let idx = 0
-    let filalyArr = []
-    if (!str) return 0
-    if (str.length === 1) return 1
-    splitStrFn2()
-    function splitStrFn2(index = 0) {
-      let first, splitNextStr, next, splitStr
-      // 当前第一位  启动下标点
-      first = str[index]
-      // 如果undefined，说明已达到临界值，结束递归
-      if (!first) return
-      // 排除第一位，拿到剩余str
-      splitNextStr = str.slice(index + 1)
-      // 在剩余str中拿到下一个匹配启动下标点的下标
-      next = splitNextStr.indexOf(first)
-      // 如果等于 -1 说明当前str有且只有一项 first filalyArr push
-      if (next === -1) {
-        let newAr = str.split('')
-        newAr.splice(0, index)
-        let sliceStr = ''
-        // this.nowIdx = 0
-        let b = newAr.reduce((sur, pre, idx) => {
-          // console.log(sur, pre, idx, newAr);
-          if (sur.indexOf(pre) === -1) {
-            sliceStr = sur + pre
-            this.nowIdx = idx || 1 + index
-          } else {
-            // console.log(sur, pre, idx);
-            this.nowIdx = idx || 1 + index
-            newAr.splice(idx + 1)
-            return sur
-          }
-          return sliceStr
-        })
-        // console.log(b, first, 'sliceStr', this.nowIdx, index);
-
-        filalyArr.filter(item => item === b).length === 0 && filalyArr.push(b)
-        return splitStrFn2(++index)
-      } else {
-        // 拿到首次匹配到的str 也就是目标str -> t
-        splitStr = str.slice(index, next + index + 1)
-        // 如果filalyArr中已有当前匹配项,或者有重复字符，直接跳过，进行下一个
-        let { bol, seleI } = isEvery(splitStr)
-        if(seleI !== -1){
-          console.log(bol, index, seleI);
-          filalyArr.push(splitStr.slice(index, seleI + 1))
-        }
-        if ((filalyArr.indexOf(splitStr) !== -1) || !bol) return splitStrFn2(++index)
-        filalyArr.push(splitStr)
+    /*
+      创建一个滑动窗口,循环内根据indexOf来判断窗口内有无当前索引下的值, 有的话删除窗口内此值之前(包括当前值)的内容,然后向窗口内push当前索引下的值,保证其唯一. 无就向内push,每次循环完毕都更新最大值,最后返回最终比较之后的最大值.
+    */
+    let arr = [], max = 0
+    for (let i = 0; i < str.length; i++) {
+      let index = arr.indexOf(str[i])
+      if (index !== -1) {
+        arr.splice(0, index + 1)
       }
-      // 已当前目标str进行下一小轮的匹配  t
-      splitStrFn2(++index)
+      arr.push(str[i])
+      max = Math.max(arr.length, max)
+      console.log(arr);
     }
-
-    function isEvery(s) {
-      let newA = [...s.split('')], seleI = -1
-      let bol = newA.every((item, index) => {
-        let newA1 = [...newA]
-        newA1.splice(index, 1)
-        if (newA1.indexOf(item) !== -1) {
-          seleI = newA1.indexOf(item)
-        }
-        return newA1.indexOf(item) === -1
-      })
-      return { bol, seleI }
-    }
-    console.log(filalyArr, 'filalyArr', str);
-
-    filalyArr = filalyArr.map(item => item.length)
-    filalyArr = filalyArr.sort((a, b) => b - a)
-    return filalyArr[0]
+    return max
   };
-  console.log(lengthOfLongestSubstring("zwnigfunjwz")) // au abb bacbacbb bbbbb pwwkew abb ohvhjdml jxdlnaaij zwnigfunjwz
+  console.log(lengthOfLongestSubstring("dvdf"))
 </script>
 
 </html>
