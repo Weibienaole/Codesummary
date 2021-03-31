@@ -14,6 +14,7 @@ import Comment from "./testBox/testDemo";
 import Inputs from "./inputs/index";
 import StoreBox from "./storeBox/index";
 import ContextDemo from "./contextDemo/index";
+import ContextDemo2 from "./contextDemo/demo2";
 import RefsBox from "./refsBox/index";
 import RefsDemo from "./refsBox/demo2";
 import HOCBox from "./HOCBox/index";
@@ -73,6 +74,7 @@ class Routers extends React.Component {
           <Route exact path="/Comment" component={Comment} />
           <Route exact path="/StoreBox" component={StoreBox} />
           <Route exact path="/ContextDemo" component={ContextDemo} />
+          <Route exact path="/ContextDemo2" component={ContextDemo2} />
           <Route exact path="/refs/index" component={RefsBox} />
           <Route exact path="/refs/demo" component={RefsDemo} />
           <Route exact path="/HOCBox" component={HOCBox} />
