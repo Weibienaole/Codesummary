@@ -126,10 +126,169 @@ class DevTools {
 
   // 滚动到指定元素区域 --> 该代码段可将指定元素平滑滚动到浏览器窗口的可见区域。
   // smoothScroll11('#fooBar');
-  smoothScroll(element) {
-    document.querySelector(element).scrollIntoView({
+  smoothScroll(el) {
+    document.querySelector(el).scrollIntoView({
       behavior: 'smooth'
     });
+  }
+
+  // 取当前页面的滚动位置
+  //  getScrollPosition(); // {x: 0, y: 200}
+  // el 为选定 dom 默认 window
+  // 返回 {x: , y: }
+  getScrollPosition(el = window) {
+    return {
+      x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
+      y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
+    }
+  }
+
+  // 功能描述：一些业务场景，如弹框出现时，需要禁止页面滚动，这是兼容安卓和 iOS 禁止页面滚动的解决方案
+  // 固定滚动条  接受一个y轴 Number
+  preventScroll(scrollNum) {
+    // 存储当前滚动位置
+    scrollNum = window.scrollY;
+
+    // 将可滚动区域固定定位，可滚动区域高度为 0 后就不能滚动了
+    document.body.style["overflow-y"] = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
+    document.body.style.top = -scrollNum + "px";
+    // document.body.style['overscroll-behavior'] = 'none'
+  }
+  // 恢复滚动条  接受一个y轴 Number  如果配合 preventScroll 方法使用需要现将 固定前的滚动条高度记录，再恢复时赋值给 recoverScroll 方法
+  recoverScroll(scrollNum) {
+    document.body.style["overflow-y"] = "auto";
+    document.body.style.position = "static";
+    // document.querySelector('body').style['overscroll-behavior'] = 'none'
+
+    window.scrollTo(0, scrollNum);
+  }
+
+  // 检查指定的元素在视口中是否可见
+
+  // elementIsVisibleInViewport(el); // 需要左右可见
+  // elementIsVisibleInViewport(el, true); // 需要全屏(上下左右)可以见
+
+  elementIsVisibleInViewport(el, partiallyVisible = false) {
+    const { top, left, bottom, right } = el.getBoundingClientRect();
+    const { innerHeight, innerWidth } = window;
+    return partiallyVisible
+      ? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) &&
+      ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
+      : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
+  }
+
+  // 某个元素开启全屏 接受一个 dom 作为参数
+  launchFullscreen(el) {
+    if (el.requestFullscreen) {
+      el.requestFullscreen()
+    } else if (el.mozRequestFullScreen) {
+      el.mozRequestFullScreen()
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen()
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullScreen()
+    }
+  }
+
+  // 关闭全屏模式
+  exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen()
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen()
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen()
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen()
+    }
+  }
+
+
+  // js
+
+  // 将一组表单元素转化为对象
+  /*
+    example
+    formToObject(document.querySelector('#form')); 
+        { email: 'test@email.com', name: 'Test Name' }
+  */
+  formToObject(form) {
+    return Array.from(new FormData(form)).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value
+      }),
+      {}
+    );
+  }
+
+  // 将字符串复制到剪贴板
+  /*
+    example: 
+    copyToClipboard('Lorem ipsum'); 
+      'Lorem ipsum' copied to clipboard
+  */
+  copyToClipboard(str) {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    const selected =
+      document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    if (selected) {
+      document.getSelection().removeAllRanges();
+      document.getSelection().addRange(selected);
+    }
+  }
+
+  // 金钱格式化，三位加逗号
+  formatMoney(val) {
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+  // B转换到KB,MB,GB并保留两位小数  参数接受一个 b 字节 为单位的值
+  formatFileSize(fileSize) {
+    let temp;
+    if (fileSize < 1024) {
+      return fileSize + 'B';
+    } else if (fileSize < (1024 * 1024)) {
+      temp = fileSize / 1024;
+      temp = temp.toFixed(2);
+      return temp + 'KB';
+    } else if (fileSize < (1024 * 1024 * 1024)) {
+      temp = fileSize / (1024 * 1024);
+      temp = temp.toFixed(2);
+      return temp + 'MB';
+    } else {
+      temp = fileSize / (1024 * 1024 * 1024);
+      temp = temp.toFixed(2);
+      return temp + 'GB';
+    }
+  }
+
+  // 去除空格
+  // str 待处理字符串
+  // type 去除空格类型 1-所有空格  2-前后空格  3-前空格 4-后空格 默认为1
+  strTrim(str, type = 1) {
+    if (type && type !== 1 && type !== 2 && type !== 3 && type !== 4) return;
+    switch (type) {
+      case 1:
+        return str.replace(/\s/g, "");
+      case 2:
+        return str.replace(/(^\s)|(\s*$)/g, "");
+      case 3:
+        return str.replace(/(^\s)/g, "");
+      case 4:
+        return str.replace(/(\s$)/g, "");
+      default:
+        return str;
+    }
   }
 
   // 检测移动/PC设备
@@ -139,7 +298,8 @@ class DevTools {
       : 'Desktop';
   }
 
-  isAndroidPlatform(){
+  // 当前设备是否是 android
+  isAndroidPlatform() {
     const u = navigator.userAgent
     const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
     return isAndroid
@@ -152,7 +312,7 @@ class DevTools {
     }
     let o = {}
     let params = url.split('?')[1]
-    if(!params) return {}
+    if (!params) return {}
     params.split('&').map(item => {
       let r = item.split('=')
       o[item.split('=')[0]] = r[1]
@@ -247,7 +407,7 @@ class DevTools {
   rewirteLog() {
     console.log = (function (log) {
       // webpack.config.js 中必须设置好正确的 mode
-        return process.env.NODE_ENV == 'development'? log : function() {}
+      return process.env.NODE_ENV == 'development' ? log : function () { }
     }(console.log))
   }
 

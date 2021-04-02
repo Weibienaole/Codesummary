@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+  <title>page</title>
+  <link rel="stylesheet" href="">
+</head>
+<style>
+
+</style>
+
+<body>
+  <div class="">
+  </div>
+</body>
+
+<script>
+
+
+  // 隐式转换
+  // let c = 0
+  // let a = {
+  //   b: 0,
+  //   toString: function () {
+  //     return this.b++
+  //   }
+  // }
+  let b = 0
+  Object.defineProperty(window, 'a', {
+    get() {
+      return ++b
+    },
+  })
+  if (a === 1 && a === 2 && a === 3) {
+    // console.log('gogogo!');
+  }
+  // if(a == 1 && a == 2 && a == 3){
+  //   console.log('adsasdasdasd!');
+  // }
+
+
+  // 类型转换
+  let len1 = ({} + {}).length // 隐式类型转换 toString 30
+  let len2 = ([] + []).length // 本身具有toString方法进行转换 0  [1,2,3].toString() // '1,2,3'
+  let len3 = (function () { }).length // 0 函数的length 返回的是形参的数目 函数哪 arguments.length 返回的是实参的数目
+  function test(a, b, c) {
+    // console.log(arguments.length, 'arguments'); // 5
+  }
+  // test(1,2,3,4,5) // 3
+
+
+
+  // 改造结构 树状
+  const comments1 = [
+    { id: 2, parentId: 1 },
+    { id: 3, parentId: 1 },
+    { id: 4, parentId: 2 },
+    { id: 5, parentId: 4 },
+    { id: 6, parentId: 5 },
+  ];
+  function setTree(arr, parentId = 1, parentName = 'parentId') {
+    return arr.filter(item => item[parentName] == parentId).map(item => { return { ...item, children: this.setTree(arr, item.id, parentName) } })
+  }
+  // console.log(setTree(comments1), 'newObj');
+
+
+
+</script>
+
+</html>
