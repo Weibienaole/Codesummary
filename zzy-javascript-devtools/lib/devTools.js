@@ -307,9 +307,7 @@ class DevTools {
 
   // 获取地址栏参数
   getUrlData(url) {
-    if (url.slice(url.length - 2, url.length) === '#/') {
-      url = url.slice(0, url.length - 2)
-    }
+    if (url.slice(url.length - 2, url.length) === '#/') url = url.slice(0, url.length - 2)
     let o = {}
     let params = url.split('?')[1]
     if (!params) return {}
@@ -409,6 +407,177 @@ class DevTools {
       // webpack.config.js 中必须设置好正确的 mode
       return process.env.NODE_ENV == 'development' ? log : function () { }
     }(console.log))
+  }
+
+  // 增强版typeOf typeOf 关键字对于null，date 都会认为是Object，不准确
+  typeOf(data) {
+    let res = Object.prototype.toString.call(data).split(' ')[1]
+    return res.slice(0, res.length - 1)
+  }
+
+  // 深拷贝
+  deepClone(target) {
+    let result;
+    if (typeof target === 'object') {
+      if (Array.isArray(target)) {
+        result = [];
+        for (let i in target) {
+          result.push(deepClone(target[i]))
+        }
+      } else if (target === null) {
+        result = null;
+      } else if (target.constructor === RegExp) {
+        result = target;
+      } else {
+        result = {};
+        for (let i in target) {
+          result[i] = deepClone(target[i]);
+        }
+      }
+    } else {
+      result = target;
+    }
+    return result;
+  }
+
+  // 启用图片懒加载
+  // 需要设置html中的img src为空，data-src属性为目标路径
+  lazyImage() {
+    // 懒记载图片列表，将伪数组转为数组，以便可以使用数组的api      
+    let imageElements = Array.prototype.slice.call(document.getElementsByTagName('img')), _throttleFn
+    init()
+    function inViewShow() {
+      let len = imageElements.length
+      for (let i = 0; i < len; i++) {
+        let imageElement = imageElements[i]
+        const rect = imageElement.getBoundingClientRect()
+        // 出现在视野的时候加载图片        
+        if (rect.top < document.documentElement.clientHeight) {
+          imageElement.src = imageElement.dataset.src
+          // 移除掉已经显示的          
+          imageElements.splice(i, 1)
+          len--
+          i--
+          if (imageElements.length === 0) {
+            // 如果全部都加载完 则去掉滚动事件监听            
+            document.removeEventListener('scroll', _throttleFn)
+          }
+        }
+      }
+    }
+    function throttle(fn, delay = 100, mustRun = 30) {
+      let t_start = null
+      let timer = null
+      let context = this
+      return function () {
+        let t_current = +(new Date())
+        let args = Array.prototype.slice.call(arguments)
+        clearTimeout(timer)
+        if (!t_start) {
+          t_start = t_current
+        }
+        if (t_current - t_start > mustRun) {
+          fn.apply(context, args)
+          t_start = t_current
+        } else {
+          timer = setTimeout(() => {
+            fn.apply(context, args)
+          }, delay)
+        }
+      }
+    }
+    function init() {
+      // 通过IntersectionObserver api判断图片是否出现在可视区域内，不需要监听Scroll来判断      
+      if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry, index) => {
+            // 如果元素可见            
+            if (entry.isIntersecting) {
+              let lazyImage = entry.target
+              lazyImage.src = lazyImage.dataset.src
+              lazyImage.classList.remove("lazy-image")
+              lazyImageObserver.unobserve(lazyImage)
+              imageElements.splice(index, 1)
+            }
+          })
+        })
+        imageElements.forEach(function (lazyImage) {
+          lazyImageObserver.observe(lazyImage);
+        })
+      } else {
+        inViewShow()
+        _throttleFn = throttle(inViewShow)
+        document.addEventListener('scroll', _throttleFn.bind(this))
+      }
+    }
+  }
+
+  // 防抖 执行函数,间隔时间,是否立即执行一次
+  debounce(func, wait, immediate = true) {
+    var timeout, result;
+    var debounced = function () {
+      var context = this;
+      var args = arguments;
+      if (timeout) clearTimeout(timeout);
+      if (immediate) {
+        // 如果已经执行过，不再执行
+        var callNow = !timeout;
+        timeout = setTimeout(function () {
+          timeout = null;
+        }, wait)
+        if (callNow) result = func.apply(context, args)
+      } else {
+        timeout = setTimeout(function () {
+          func.apply(context, args)
+        }, wait);
+      }
+      return result;
+    };
+    debounced.cancel = function () {
+      clearTimeout(timeout);
+      timeout = null;
+    };
+    return debounced;
+  }
+
+  // 节流 执行函数,间隔时间,设置{leading: 调用后是否立即执行一次,trailing: 结束后是否还要执行一次} 默认都为true，但都不能为false
+  throttle(func, wait, options) {
+    var timeout, context, args
+    var previous = 0
+    if (!options) options = {}
+
+    var later = function () {
+      previous = options.leading === false ? 0 : new Date().getTime()
+      timeout = null
+      func.apply(context, args)
+      if (!timeout) context = args = null
+    }
+
+    var throttled = function () {
+      var now = new Date().getTime()
+      if (!previous && options.leading === false) previous = now
+      var remaining = wait - (now - previous)
+      context = this
+      args = arguments
+      if (remaining <= 0 || remaining > wait) {
+        if (timeout) {
+          clearTimeout(timeout)
+          timeout = null
+        }
+        previous = now
+        func.apply(context, args)
+        if (!timeout) context = args = null
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining)
+      }
+    }
+
+    throttled.cancel = function () {
+      clearTimeout(timeout)
+      previous = 0
+      timeout = null
+    }
+    return throttled
   }
 
 
