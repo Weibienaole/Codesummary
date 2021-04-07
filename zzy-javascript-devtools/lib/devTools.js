@@ -442,9 +442,12 @@ class DevTools {
 
   // 启用图片懒加载
   // 需要设置html中的img src为空，data-src属性为目标路径
-  lazyImage() {
+  // 必须等待加载目标的 data-src 属性赋值完毕，再执行此方法
+  lazyImage(className = null) {
     // 懒记载图片列表，将伪数组转为数组，以便可以使用数组的api      
-    let imageElements = Array.prototype.slice.call(document.getElementsByTagName('img')), _throttleFn
+    let imageElements = Array.prototype.slice.call(className ? document.querySelectorAll(className) : document.getElementsByTagName('img')), _throttleFn
+    // 只针对具有参数的值进行处理
+    imageElements = imageElements.filter(item => item.dataset.src)
     init()
     function inViewShow() {
       let len = imageElements.length
@@ -465,6 +468,7 @@ class DevTools {
         }
       }
     }
+    // 节流
     function throttle(fn, delay = 100, mustRun = 30) {
       let t_start = null
       let timer = null

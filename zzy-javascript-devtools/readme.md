@@ -1,8 +1,25 @@
+
 # 渣渣宇的开发工具包
 
 ## 目前分为两类，正则(regModules) 和 一些常用的方法(devtools)
 
+## 安装
+```javascript
+npm i zzy-javascript-devtools
+```
+## 使用
+```javascript
+import { regModules, devtools } from 'zzy-javascript-devtools'
+
+// regModules 为正则模块  devtools 为方法模块
+// example： 
+// regModules.isPhone(13412341234) // true
+// devtools.bottomVisible() // false
+```
+
 ### regModules
+
+#### 正则模块方法返回值皆为 **Boolean**
 
 
 - 身份证 **isIdCard(idCard)**
@@ -39,6 +56,7 @@
 
 ##### 算法类
 ###### generateTree(list, parentId, selectVal)
+- 参数 ( 初始数组, 默认id = null, 以哪个元素为ID进行生成 = 'parentId')
 - 根据数组生成树结构 
 - 返回一个新的数组
 
@@ -62,12 +80,12 @@ const comments1 = [
 
 ##### 时间
 ###### getColonTimeFromDate(time)
-- 返回24小时制时间的字符串
 - 接受一个 new Date() 的值 
+- 返回24小时制时间的字符串
 
 ###### getDaysDiffBetweenDates(start, end)
-- 返回两个日期之间的差值(天)
 - 接受一个 new Date() 的值 
+- 返回两个日期之间的差值(天)
 
 ###### changeTimeYear(time)
 - 时间格式转化年
@@ -97,6 +115,7 @@ const comments1 = [
 ###### getScrollPosition(el = window)
 - 取当前页面(元素)的滚动位置
 - 该参数接受一个dom元素，默认为window
+- 返回 {x: , y: }
 
 ###### preventScroll(scrollNum)
 - 固定滚动条
@@ -128,7 +147,8 @@ const comments1 = [
 - 接受一个 Number
 ###### formatFileSize(fileSize)
 - B转换到KB,MB,GB并保留两位小数  参数接受一个 b 字节 为单位的值
-- 接受一个 String 返回一个 String
+- 接受一个 String
+- 返回一个 String
 ###### strTrim(str, type = 1)
 - 去除空格
 - str: 待处理字符串
@@ -163,6 +183,7 @@ const comments1 = [
 ###### lazyImage()
 - 启用图片懒加载
 - 需要设置html中的img src为空，data-src属性为目标路径
+- 必须等待加载目标的 data-src 属性赋值完毕，再执行此方法
 ###### debounce(func, wait, immediate)
 - 函数防抖
 - 参数： 执行函数, 等待时间, 是否立即执行一次(默认true)
@@ -184,8 +205,8 @@ const comments1 = [
 
 ##### css
 ###### getDomStyle(el, ruleName)
-- 返回指定元素的生效样式
 - 参数 el -> dom   ruleName -> 样式名称
+- 返回指定元素的生效样式
 - example: getDomStyle(document.querySelector('p'), 'font-size')
 
 ##### app&js
