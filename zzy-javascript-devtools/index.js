@@ -15,3 +15,6 @@ let regModules = new RegModules()
 // export default { devtools }
 module.exports = { devtools, regModules }
 // export default 
+
+
+// react 通过babel单独转译,转译之后引入index.js 整体导出

@@ -1,7 +1,7 @@
 {
   "name": "zzy-javascript-devtools",
   "version": "1.1.7",
-  "main": "lib/boundle.js",
+  "main": "./lib/boundle.js",
   "license": "MIT",
   "devDependencies": {
     "react-dev-utils": "10.2.1",

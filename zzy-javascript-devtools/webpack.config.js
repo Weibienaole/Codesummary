@@ -1,6 +1,6 @@
 const path = require('path')
 module.exports = {
-  mode: 'development', // production development
+  mode: 'development',
   entry: './index.js',
   output:{
     filename: 'boundle.js',
