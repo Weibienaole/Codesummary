@@ -1,0 +1,21 @@
+.topBar-component {
+  width: 100vw;
+  height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #fff;
+}
+.topBar-component .arrow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5.5rem;
+  height: 5.5rem;
+}
+.topBar-component .topBarTil {
+  font-size: 2.25rem;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+}

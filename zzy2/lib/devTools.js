@@ -547,6 +547,7 @@ class DevTools {
   // 节流 执行函数,间隔时间,设置{leading: 调用后是否立即执行一次,trailing: 结束后是否还要执行一次} 默认都为true，但都不能为false
   throttle(func, wait, options) {
     var timeout, context, args
+    // 上一次的时间点
     var previous = 0
     if (!options) options = {}
 
@@ -558,11 +559,15 @@ class DevTools {
     }
 
     var throttled = function () {
+      // 拿到当前时间的时间戳
       var now = new Date().getTime()
+      // 如果 上一次时间为0 且 不设置立即执行，将当前时间赋值给上次时间
       if (!previous && options.leading === false) previous = now
+      // 当前空档时间 设定等待值 - (当前 - 上一次时间)
       var remaining = wait - (now - previous)
       context = this
       args = arguments
+      // console.log(arguments, 'arguments');
       if (remaining <= 0 || remaining > wait) {
         if (timeout) {
           clearTimeout(timeout)
@@ -582,6 +587,56 @@ class DevTools {
       timeout = null
     }
     return throttled
+  }
+
+  // 无限滚动
+  /**
+   * 
+   * @param {目标节点} dom 
+   * @param {Function} cb 
+   * @param {可选：关闭监听(只有在监听滚动条时才会有效，否则无效，可忽略(针对低版本浏览器启用监听滚动条方式进行处理))} devtools.infinityScrollIng.closeMonitor()
+   * 
+   * 
+   * example:
+   * devtools.infinityScrollIng(document.querySelector('.bottomScrollBar'), ()=>{
+   * // 回调第一行必须设置 infinityScrollIng 的bol 属性为 false，意味着已经进程已经开始，必须等待结束(失败或者成功)才可以重新为true，才可以进行下一次的回调触发
+   * devtools.infinityScrollIng.open = false
+   * //  ...some code
+   * devtools.infinityScrollIng.open = true // done
+   * })
+   */
+  infinityScrolling(dom, cb) {
+    this.infinityScrollIng.bol = true
+    let throttleFn
+    //  需要一个外界bol判断是否加载完毕 不完毕不再次触发
+    if ('IntersectionObserver' in window) {
+      let intersectionOb = new IntersectionObserver(entry => {
+        if (!this.infinityScrollIng.bol) return
+        // 1 - 可视范围内 0 - 不在可视范围内
+        if (entry[0].intersectionRatio) cb()
+      })
+      // 对 dom 启用监听
+      intersectionOb.observe(dom)
+    } else {
+      // 启用节流 100ms
+      throttleFn = devtools.throttle(monitorScroll, 100)
+      // 开启监听
+      document.addEventListener('scroll', throttleFn)
+    }
+    // 关闭监听 scroll监听时
+    this.infinityScrollIng.closeMonitor = function () {
+      if ('IntersectionObserver' in window) return
+      // 关闭节流
+      throttleFn.cancel()
+      // 取消监听
+      document.removeEventListener('scroll', throttleFn)
+    }
+    // 监听滚动条要做的事情
+    function monitorScroll() {
+      if (!this.infinityScrollIng.bol) return
+      // 检查指定的元素在视口中是否可见
+      if (devtools.elementIsVisibleInViewport(dom, true)) cb()
+    }
   }
 
 

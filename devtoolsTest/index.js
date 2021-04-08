@@ -45,10 +45,8 @@ function copy1(data) {
   return a
 }
 
-// console.log(copy1([1,2,3]));
 
 // 调用例子
 devtools.lazyImage()
-
 
 
