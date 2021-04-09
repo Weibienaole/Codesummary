@@ -1,6 +1,6 @@
-const RegModules = require('./src/regModule')
-const DevTools = require('./src/devTools')
-// const {ReactComponents} = require('./src/reactComponets')
+const RegModules = require('./lib/regModule')
+const DevTools = require('./lib/devTools')
+const ReactComponents = require('./lib/reactComponents/index')
 
 // html引入 import 方式替换require处理
 // import DevTools from './src/devTools'
@@ -9,11 +9,9 @@ const DevTools = require('./src/devTools')
 let devtools = new DevTools()
 let regModules = new RegModules()
 
-// console.log(ReactComponents, 'ReactComponents');
-
 // html引入
 // export default { devtools }
-module.exports = { devtools, regModules }
+module.exports = { devtools, regModules, ReactComponents }
 // export default 
 
 

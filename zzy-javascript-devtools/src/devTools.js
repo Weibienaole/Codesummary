@@ -606,6 +606,7 @@ class DevTools {
    * })
    */
   infinityScrolling(dom, cb) {
+    const that = this
     this.infinityScrolling.bol = true
     let throttleFn
     //  需要一个外界bol判断是否加载完毕 不完毕不再次触发
@@ -619,7 +620,7 @@ class DevTools {
       intersectionOb.observe(dom)
     } else {
       // 启用节流 100ms
-      throttleFn = devtools.throttle(monitorScroll, 100)
+      throttleFn = this.throttle(monitorScroll, 100)
       // 开启监听
       document.addEventListener('scroll', throttleFn)
     }
@@ -633,9 +634,9 @@ class DevTools {
     }
     // 监听滚动条要做的事情
     function monitorScroll() {
-      if (!this.infinityScrolling.bol) return
+      if (!that.infinityScrolling.bol) return
       // 检查指定的元素在视口中是否可见
-      if (devtools.elementIsVisibleInViewport(dom, true)) cb()
+      if (that.elementIsVisibleInViewport(dom, true)) cb()
     }
   }
 

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import './index.css'
 import App from './App'
-import devtools from 'zzy-javascript-devtools'
+import {devtools} from 'zzy-javascript-devtools'
 // 兼容Android9以下机型
 import 'babel-polyfill'
 
@@ -35,10 +35,9 @@ devtools.appMethod(name, data).then(res=>{
  * sharePoster - 分享海报  参数为一个对象，内部参数app定义
  */
 
-console.log(devtools, 'devtools');
-
 // rem 设置
 devtools.setDomRem(8)
+
 
 
 

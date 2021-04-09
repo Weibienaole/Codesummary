@@ -10,7 +10,6 @@ function ScrollLoadingBar({ getMoreData }) {
   let [a, setA] = useState()
   useEffect(() => {
     let that = this
-    console.log(devtools.infinityScrolling, 'devtools');
     devtools.infinityScrolling(
       document.querySelector('.scrollLoadingBar'),
       () => {

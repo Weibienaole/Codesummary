@@ -1,15 +1,13 @@
 import React, { Component, useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { devtools } from 'zzy-javascript-devtools'
+import { devtools, ReactComponents } from 'zzy-javascript-devtools'
 
 import './index.css'
 import request from '../../utils/request'
-import ScrollLoadingBar from '../../components/ScrollLoadingBar'
 class PagePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      moreBol: true,
       inde: 0
     }
   }
@@ -19,19 +17,9 @@ class PagePage extends Component {
     console.log(window.location.href)
     // let url = window.location.href
     // console.log(token)
-    // devtools.infinityScrollIng(
-    //   document.querySelector('.scrollLoadingBar'),
-    //   () => {
-    //     devtools.infinityScrollIng.bol = false
-    //     that.getData()
-    //   }
-    // )
+    devtools.lazyImage()
   }
   getData() {
-    // console.log(ReactComponents);
-    this.setState({
-      moreBol: false
-    })
     let that = this
     let timer = setTimeout(() => {
       console.log('setTimeout')
@@ -39,16 +27,22 @@ class PagePage extends Component {
         '.container'
       ).innerHTML += `<span>${that.state.inde}</span><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>`
       that.setState({
-        moreBol: true,
         inde: ++that.state.inde
       })
-      clearTimeout(timer)
       devtools.infinityScrolling.bol = true
-    }, 1000)
+      clearTimeout(timer)
+    }, 2000)
   }
   render() {
     return (
       <div className="page-wrap">
+        asas
+        <ReactComponents.TopBar
+        type="1"
+          title=""
+          rigTxt="计票规则"
+        ></ReactComponents.TopBar>
+        <ReactComponents.NoData say={'asasasas'}></ReactComponents.NoData>
         <div className="container">
           <br />
           <br />
@@ -100,11 +94,14 @@ class PagePage extends Component {
           <br />
           <br />
           <br />
+          <ReactComponents.Img
+            src="https://www.babeljs.cn/img/babel.png"
+            className="img"
+          ></ReactComponents.Img>
         </div>
-        <ScrollLoadingBar
+        <ReactComponents.ScrollLoadingBar
           getMoreData={() => this.getData()}
-        ></ScrollLoadingBar>
-        {/* <div className="scrollLoadingBar"></div> */}
+        ></ReactComponents.ScrollLoadingBar>
       </div>
     )
   }
