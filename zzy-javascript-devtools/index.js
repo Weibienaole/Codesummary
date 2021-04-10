@@ -1,6 +1,6 @@
-const RegModules = require('./lib/regModule')
-const DevTools = require('./lib/devTools')
-const ReactComponents = require('./lib/reactComponents/index')
+const RegModules = require('./lib/regModule.min')
+const DevTools = require('./lib/devTools.min')
+const ReactComponents = require('./lib/reactComponents/index.min')
 
 // html引入 import 方式替换require处理
 // import DevTools from './src/devTools'

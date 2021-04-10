@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import './index.css'
 import App from './App'
-import {devtools} from 'zzy-javascript-devtools'
+import { devtools } from 'zzy-javascript-devtools'
 // 兼容Android9以下机型
 import 'babel-polyfill'
 
@@ -67,13 +67,13 @@ const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
  * @param {*} callback 
  */
 const andoirFunction = (callback) => {
-    if (window.WebViewJavascriptBridge) {
-        callback(window.WebViewJavascriptBridge);
-    } else {
-        document.addEventListener('WebViewJavascriptBridgeReady', function () {
-            callback(window.WebViewJavascriptBridge);
-        }, false)
-    }
+  if (window.WebViewJavascriptBridge) {
+    callback(window.WebViewJavascriptBridge);
+  } else {
+    document.addEventListener('WebViewJavascriptBridgeReady', function () {
+      callback(window.WebViewJavascriptBridge);
+    }, false)
+  }
 }
 
 /**
@@ -81,16 +81,16 @@ const andoirFunction = (callback) => {
  * @param {*} callback 
  */
 const iosFuntion = (callback) => {
-    if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
-    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
-    window.WVJBCallbacks = [callback];
-    var WVJBIframe = document.createElement('iframe');
-    WVJBIframe.style.display = 'none';
-    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
-    document.documentElement.appendChild(WVJBIframe);
-    setTimeout(function(){
-         document.documentElement.removeChild(WVJBIframe);
-    }, 0);
+  if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
+  if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
+  window.WVJBCallbacks = [callback];
+  var WVJBIframe = document.createElement('iframe');
+  WVJBIframe.style.display = 'none';
+  WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+  document.documentElement.appendChild(WVJBIframe);
+  setTimeout(function () {
+    document.documentElement.removeChild(WVJBIframe);
+  }, 0);
 }
 
 /**
@@ -106,20 +106,20 @@ console.log(isAndroid, 'isAndroid, 是否安卓')
  *      2、H5 可以正常调用 IOS 这边的事件函数，并且 H5 的回调函数可以正常执行
  */
 if (isAndroid) {
-    /**
-     * 与安卓交互时，不调用这个函数会导致：
-     *      1、H5 可以正常调用 安卓这边的事件函数，但是无法再调用到 H5 的回调函数
-     * 
-     * 前提 setupWebViewJavascriptBridge 这个函数使用的是 andoirFunction 这个，否则还是会导致上面 1 的现象出现
-     */
-    console.log('index.js 安卓进入特定函数')
-    window.setupWebViewJavascriptBridge(function (bridge) {
-        // 注册 H5 界面的默认接收函数（与安卓交互时，不注册这个事件无法接收回调函数）
-        console.log('index.js 注册H5页面的默认接受函数', bridge)
-        bridge.init(function (msg, responseCallback) {
-            responseCallback("JS 返回给原生的消息内容");
-        })
+  /**
+   * 与安卓交互时，不调用这个函数会导致：
+   *      1、H5 可以正常调用 安卓这边的事件函数，但是无法再调用到 H5 的回调函数
+   * 
+   * 前提 setupWebViewJavascriptBridge 这个函数使用的是 andoirFunction 这个，否则还是会导致上面 1 的现象出现
+   */
+  console.log('index.js 安卓进入特定函数')
+  window.setupWebViewJavascriptBridge(function (bridge) {
+    // 注册 H5 界面的默认接收函数（与安卓交互时，不注册这个事件无法接收回调函数）
+    console.log('index.js 注册H5页面的默认接受函数', bridge)
+    bridge.init(function (msg, responseCallback) {
+      responseCallback("JS 返回给原生的消息内容");
     })
+  })
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))

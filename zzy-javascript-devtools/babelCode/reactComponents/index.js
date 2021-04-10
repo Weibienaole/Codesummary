@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.Img = Img;
 exports.TopBar = exports.NoData = exports.ErrorBoundary = exports.ScrollLoadingBar = void 0;
 
-var _devTools = _interopRequireDefault(require("../devTools"));
+var _devTools = _interopRequireDefault(require("../devTools.min"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -179,6 +179,7 @@ var ErrorBoundary = /*#__PURE__*/function (_Component2) {
  * 必须等待加载目标的 data-src 属性赋值完毕，再执行此方法
  * @param {String} className 赋予的类名
  * @param {String} src 目标地址
+ * @param {Function} click 具有点击事件能力
  *
  */
 
@@ -187,10 +188,14 @@ exports.ErrorBoundary = ErrorBoundary;
 
 function Img(_ref) {
   var className = _ref.className,
-      src = _ref.src;
+      src = _ref.src,
+      click = _ref.click;
   return /*#__PURE__*/_react["default"].createElement("img", {
+    onClick: function onClick() {
+      return click && click();
+    },
     src: "",
-    "data-src": src,
+    "data-src": src["default"] || src,
     alt: "",
     className: className
   });
@@ -199,6 +204,8 @@ function Img(_ref) {
   无数据显示组件
   props:
     say - 文案
+    style - 样式 就像给普通标签写样式一样添加style即可
+    src - 图片地址
 */
 
 
@@ -219,7 +226,8 @@ var NoData = /*#__PURE__*/function (_Component3) {
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "noData-component_zzyDevtools"
       }, /*#__PURE__*/_react["default"].createElement("img", {
-        src: require('./image/noData.png')["default"] || require('./image/noData.png'),
+        style: this.props.style,
+        src: this.props.src["default"] || this.props.src,
         alt: "",
         className: "noDataPic"
       }), /*#__PURE__*/_react["default"].createElement("span", {
@@ -265,13 +273,15 @@ var TopBar = /*#__PURE__*/function (_Component4) {
     value: function render() {
       var _this3 = this;
 
+      var arrowSvg = require("".concat(this.props.type == '0' ? './image/backArrow_black.svg' : './image/backArrow.svg'));
+
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: "topBar-component_zzyDevtools",
         style: {
           background: this.props.type == 0 ? '#fff' : this.props.type == 1 ? '#000' : 'none'
         }
       }, !this.props.noArrow && /*#__PURE__*/_react["default"].createElement("img", {
-        src: require("".concat(this.props.type == '0' ? './image/backArrow_black.png' : './image/backArrow.png'))["default"] || require("".concat(this.props.type == '0' ? './image/backArrow_black.png' : './image/backArrow.png')),
+        src: arrowSvg["default"] || arrowSvg,
         alt: "",
         className: "arrow",
         onClick: function onClick() {
@@ -295,6 +305,7 @@ var TopBar = /*#__PURE__*/function (_Component4) {
   }]);
 
   return TopBar;
-}(_react.Component);
+}(_react.Component); // ./node_modules/.bin/uglifyjs ./index.js
+
 
 exports.TopBar = TopBar;

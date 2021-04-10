@@ -1,5 +1,5 @@
-import Devtools from '../devTools.min'
-import React, { Component } from 'react'
+import Devtools from '../devTools'
+import React, { Component, useState, useEffect } from 'react'
 import './index.css'
 
 // function selfRequire(d){
@@ -196,6 +196,3 @@ class TopBar extends Component {
 }
 
 export { ScrollLoadingBar, ErrorBoundary, Img, NoData, TopBar }
-
-
-// ./node_modules/.bin/uglifyjs ./index.js

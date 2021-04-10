@@ -11,14 +11,32 @@ npm i zzy-javascript-devtools
 ## 使用
 
 ```javascript
-import { regModules, devtools } from 'zzy-javascript-devtools'
+import { regModules, devtools, ReactComponents } from 'zzy-javascript-devtools'
 
-// regModules 为正则模块  devtools 为方法模块
+// regModules 为正则模块  devtools 为方法模块  ReactComponents 为 React组件
 // example：
-// regModules.isPhone(13412341234) // true
-// devtools.bottomVisible() // false
+regModules.isPhone(13412341234) // true
+devtools.bottomVisible() // false
+<ReactComponents.Img></ReactComponents.Img>
 ```
 
+## 历史
+- 1.2.6 & 1.2.7 & 1.2.8
+  - ReactComponents
+    -  NoData 组件支持自定义图片，并可以传入 style props 来设置图片的大小
+    - Img 组件
+      - 防止require搞事情，新增一个简单的兼容
+      - 新增click点击事件，可以点击图片做一些事情
+    - TopBar 组件 代码简化，箭头图片换成了svg格式
+    - readme.md 更新
+- 1.2.5
+  - 新增React Components
+  - 大幅减少包大小 现在压缩之后仅3.1k
+  - 由于react需要转化为ES5，顺便将所有的文件转译成了ES5语法
+  - 调整readme.md的布局，不再拉垮
+
+
+## 简述
 ### regModules
 
 #### 正则模块方法返回值皆为 **Boolean**
@@ -374,12 +392,17 @@ import { ReactComponents } from 'zzy-javascript-devtools';
 /**
  * @param {String} className 赋予的类名
  * @param {String} src 目标地址
+ * @param {Function} click 具有点击事件能力
  */
 
 // example:
 import { ReactComponents } from 'zzy-javascript-devtools';
 
-<ReactComponents.Img src="link" className="className"></ReactComponents.Img>
+<ReactComponents.Img
+  src="link" 
+  className="className" 
+  click={()=>console.log('click!')}
+></ReactComponents.Img>
 ```
 
 ##### 无数据显示组件 NoData
@@ -387,12 +410,18 @@ import { ReactComponents } from 'zzy-javascript-devtools';
 ```javascript
 /**
  *  @param {String} say 文案
+ *  @param {Object} style 样式 就像给普通标签写样式一样添加style即可
+ *  @param {String} src 图片地址
  * */
 
 // example
 import { ReactComponents } from 'zzy-javascript-devtools';
 
-<ReactComponents.NoData say={'暂无数据！'}></ReactComponents.NoData>
+<ReactComponents.NoData
+  say={'asasasas'}
+  style={{ width: '16.25rem', height: '15.69rem' }}
+  src={require('./image/noData.png')}
+></ReactComponents.NoData>
 ```
 
 ##### 顶部栏(kl 标准) TopBar

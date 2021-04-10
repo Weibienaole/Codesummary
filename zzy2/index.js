@@ -1,17 +1,18 @@
 const RegModules = require('./lib/regModule')
 const DevTools = require('./lib/devTools')
-const {ScrollLoadingBar} = require('./lib/reactComponets')
+const ReactComponents = require('./lib/reactComponents/index')
 
 // html引入 import 方式替换require处理
-// import DevTools from './lib/devTools'
+// import DevTools from './src/devTools'
 // ...
 
 let devtools = new DevTools()
 let regModules = new RegModules()
 
-console.log(ScrollLoadingBar, 'ReactComponents');
-
 // html引入
 // export default { devtools }
+module.exports = { devtools, regModules, ReactComponents }
+// export default 
 
-module.exports = { devtools, regModules, ScrollLoadingBar }
+
+// react 通过babel单独转译,转译之后引入index.js 整体导出

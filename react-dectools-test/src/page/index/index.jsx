@@ -31,18 +31,22 @@ class PagePage extends Component {
       })
       devtools.infinityScrolling.bol = true
       clearTimeout(timer)
-    }, 2000)
+    }, 1000)
   }
   render() {
     return (
       <div className="page-wrap">
         asas
         <ReactComponents.TopBar
-        type="1"
+          type="1"
           title=""
           rigTxt="计票规则"
         ></ReactComponents.TopBar>
-        <ReactComponents.NoData say={'asasasas'}></ReactComponents.NoData>
+        <ReactComponents.NoData
+          say={'asasasas'}
+          style={{ width: '16.25rem', height: '15.69rem' }}
+          src={require('./image/noData.png')}
+        ></ReactComponents.NoData>
         <div className="container">
           <br />
           <br />
@@ -97,6 +101,7 @@ class PagePage extends Component {
           <ReactComponents.Img
             src="https://www.babeljs.cn/img/babel.png"
             className="img"
+            click={() => console.log(1, 'click')}
           ></ReactComponents.Img>
         </div>
         <ReactComponents.ScrollLoadingBar
