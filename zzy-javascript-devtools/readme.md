@@ -20,7 +20,10 @@ devtools.bottomVisible() // false
 <ReactComponents.Img></ReactComponents.Img>
 ```
 
-## 历史
+## 版本更新历史
+- 1.2.9
+  - 本次改动目的为优化、压缩
+    - 将所有文件进行压缩处理，更加精致
 - 1.2.6 & 1.2.7 & 1.2.8
   - ReactComponents
     -  NoData 组件支持自定义图片，并可以传入 style props 来设置图片的大小

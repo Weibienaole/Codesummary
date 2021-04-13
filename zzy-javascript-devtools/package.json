@@ -1,11 +1,11 @@
 {
   "name": "zzy-javascript-devtools",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "babel": "./node_modules/.bin/babel src --copy-files --out-dir babelCode --presets=@babel/env,@babel/preset-react",
-    "minjs": "node ./uglifyjs.js"
+    "babel": "./node_modules/.bin/babel src --copy-files --out-dir lib --presets=@babel/env,@babel/preset-react",
+    "minfiles": "node ./uglifyjs.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
