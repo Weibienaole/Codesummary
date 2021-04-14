@@ -2,6 +2,7 @@ import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import Page from '../page/index/index'
+// import Page from '../page/index/longList'
 
 function router() {
   return (
