@@ -1,11 +1,15 @@
 import axios from 'axios'
 // import React, {Component} from 'react'
 import { Toast } from 'antd-mobile'
+import { devtools } from 'zzy-javascript-devtools'
 
 // 移动端显示vConsole
 // import vConsoleLog from '../../node_modules/vconsole/dist/vconsole.min.js'
 // 正式隐藏
 // const selfLog = new vConsoleLog()
+
+// 隐藏log
+// devtools.rewirteLog()
 function request({ u, data = {}, token = null}) {
   Toast.loading('加载中...', 30, ()=>{
     Toast.hide()

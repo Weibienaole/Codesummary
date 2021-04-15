@@ -27,8 +27,12 @@ class PagePage extends Component {
   listScrollRef = React.createRef()
   // 开始idx
   startIdx = 0
+  // 加入buffer之后的起始idx
+  originStartIdx = 0
   // 结束idx
   endIdx = Math.min(this.startIdx + this.scrollViewListNum, this.total - 1)
+  // 容错长度
+  bufferSize = 5
   componentDidMount() {
     let that = this
     // 截取url上信息
@@ -56,18 +60,17 @@ class PagePage extends Component {
     if (e.target === this.listScrollRef.current) {
       let {
         scrollHeight,
-        startIdx,
-        endIdx,
         rowHieght,
         total,
-        scrollViewListNum
+        scrollViewListNum,
+        bufferSize
       } = this
       const { scrollTop } = e.target
       let nowStartIdx = Math.floor(scrollTop / rowHieght)
       console.log(scrollTop, 'scrollTop')
       if (nowStartIdx !== this.startIdx) {
         this.startIdx = nowStartIdx
-        this.endIdx = Math.min(nowStartIdx + scrollViewListNum, total - 1)
+        this.endIdx = Math.min(nowStartIdx + scrollViewListNum + bufferSize, total - 1)
       }
       this.setState({ scrollTop })
     }

@@ -403,10 +403,7 @@ class DevTools {
 
   // 生产环境不显示 console.log
   rewirteLog() {
-    console.log = (function (log) {
-      // webpack.config.js 中必须设置好正确的 mode
-      return process.env.NODE_ENV == 'development' ? log : function () { }
-    }(console.log))
+    console.log = function(){}
   }
 
   // 增强版typeOf typeOf 关键字对于null，date 都会认为是Object，不准确

@@ -240,6 +240,10 @@ const comments1 = [
 - 该参数接受一个数值为 html 标签的 font-size 赋值
 - 直接调用即可。
 
+##### rewirteLog()
+
+- 生产环境不显示 console.log
+
 ###### typeOf(data)
 
 - 增强版 typeOf
