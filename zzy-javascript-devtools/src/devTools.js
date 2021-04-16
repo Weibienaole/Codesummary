@@ -401,7 +401,7 @@ class DevTools {
     })(375, 750);
   }
 
-  // 生产环境不显示 console.log
+  // 不显示 console.log
   rewirteLog() {
     console.log = function(){}
   }

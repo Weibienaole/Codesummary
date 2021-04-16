@@ -26,16 +26,13 @@
   background: #fff;
   border-radius: 1rem;
   overflow-y: auto;
+  position: relative;
 }
 .page-wrap .toastView .toastScrollBox .toastBox {
   position: relative;
 }
 .page-wrap .toastView .toastScrollBox .toastBox .list {
-  position: absolute;
-  left: 0;
-  padding: 0.5rem;
-  border: 0.1rem solid lightseagreen;
-  margin-bottom: 2rem;
+  border-bottom: 0.1rem solid lightseagreen;
 }
 .page-wrap .toastView .toastScrollBox .toastBox .list .til {
   width: 100%;
@@ -44,7 +41,6 @@
 }
 .page-wrap .toastView .toastScrollBox .toastBox .list .content {
   font-size: 1.3rem;
-  margin-bottom: 2rem;
 }
 .page-wrap .toastView .close {
   position: absolute;

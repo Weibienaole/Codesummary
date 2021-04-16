@@ -16,43 +16,35 @@ const rowRenderer = ({ index, style }) => {
   );
 };
 
-class App extends React.Component {
-  // 初始化高度为0
+export default class App extends React.Component {
   state = { scrollTop: 0 };
-  // 设定容器高度 -- 需要滚动的容器
-  height = 736;
-  // 消息条目
+  height = 800;
   total = 10000;
-  // 每条信息/单个栏的高度
   rowHeight = 80;
+  bufferSize = 5;
 
-  // 向上取当前容器内最大可以显示多少条/栏信息
-  limit = Math.ceil(this.height / this.rowHeight);
-  // 设置起始下标
-  startIndex = 0;
-  // 设置结束坐标 -> Math.min(起始值 + 容器所能存放的最大条目数, 总条目 - 1)
-  endIndex = Math.min(this.startIndex + this.limit, this.total - 1);
-
-  // 滚动容器的ref
   scrollingContainer = React.createRef();
 
-  // scroll监听函数
-  onScroll = (e) => {
-    // 判断当前监听的容器是否是需要相应的事件
-    if (e.target === this.scrollingContainer.current) {
-      // 当前滚动高度
-      const { scrollTop } = e.target;
-      const { startIndex, total, rowHeight, limit } = this;
-      // 计算当前最上方显示的是哪个栏  高度 / 单个栏高度
-      const currIndex = Math.floor(scrollTop / rowHeight);
+  limit = Math.ceil(this.height / this.rowHeight);
+  originStartIdx = 0;
+  startIndex = 0;
+  endIndex = Math.min(
+    this.originStartIdx + this.limit + this.bufferSize,
+    this.total - 1
+  );
 
-      // 如果 currIndex 不再是 起始下标的值，说明试图上对应的栏发生了变化
-      if (startIndex !== currIndex) {
-        // 重新赋值
-        this.startIndex = currIndex;
-        // 重新设置 结束坐标 原理同上
-        this.endIndex = Math.min(currIndex + limit, total - 1);
-        // 更新改动下标之后的 scrollTop
+  onScroll = (e) => {
+    if (e.target === this.scrollingContainer.current) {
+      const { scrollTop } = e.target;
+      const { originStartIdx, bufferSize, total, limit } = this;
+      const currentStartIndex = Math.floor(scrollTop / this.rowHeight);
+      if (currentStartIndex !== originStartIdx) {
+        this.originStartIdx = currentStartIndex;
+        this.startIndex = Math.max(currentStartIndex - bufferSize, 0);
+        this.endIndex = Math.min(
+          currentStartIndex + limit + bufferSize,
+          total - 1
+        );
         this.setState({ scrollTop: scrollTop });
       }
     }
@@ -60,7 +52,6 @@ class App extends React.Component {
 
   renderDisplayContent = () => {
     const { rowHeight } = this;
-
     const content = [];
     for (let i = this.startIndex; i <= this.endIndex; ++i) {
       content.push(
@@ -69,20 +60,25 @@ class App extends React.Component {
           style: {
             height: rowHeight - 1 + "px",
             lineHeight: rowHeight + "px",
-            left: 0,
-            right: 0,
-            position: "absolute",
-            // 动态计算top
-            top: i * rowHeight,
             borderBottom: "1px solid #000",
             width: "100%"
           }
         })
       );
     }
-    console.log(content);
     return content;
   };
+
+  getTransform() {
+    const { scrollTop } = this.state;
+    const { rowHeight, bufferSize, originStartIdx } = this;
+
+    return `translate3d(0,${
+      scrollTop -
+      (scrollTop % rowHeight) -
+      Math.min(originStartIdx, bufferSize) * rowHeight
+    }px,0)`;
+  }
 
   render() {
     const { height, total, rowHeight } = this;
@@ -93,17 +89,29 @@ class App extends React.Component {
           overflowX: "hidden",
           overflowY: "auto",
           height: height,
-          backgroundColor: "#e8e8e8"
+          backgroundColor: "#e8e8e8",
+          position: "relative"
         }}
         onScroll={this.onScroll}
       >
-        <div style={{ height: total * rowHeight, position: "relative" }}>
+        <div
+          style={{
+            height: total * rowHeight,
+            position: "relative",
+            zIndex: -1
+          }}
+        ></div>
+        <div
+          style={{
+            width: "100%",
+            position: "absolute",
+            top: 0,
+            transform: this.getTransform()
+          }}
+        >
           {this.renderDisplayContent()}
         </div>
       </div>
     );
   }
 }
-
-
-export default App
