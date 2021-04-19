@@ -21,6 +21,10 @@ devtools.bottomVisible() // false
 ```
 
 ## 版本更新历史
+- 1.3.0
+  - devtools
+    - 新增一个之前未标明的方法，并进行优化
+    - 新增app调用js方法
 - 1.2.9
   - 本次改动目的为优化、压缩
     - 将所有文件进行压缩处理，更加精致
@@ -343,13 +347,23 @@ devtools.infinityScrolling(document.querySelector('.bottomScrollBar'), () => {
 - 前置条件：必须先在 html/框架内引入 JSBriged script/入口文件 引入
 
 ```javascript
+// js 调用 app 方法
 appMethod(name, data).then((res) => {
   /**
    * name: 事件名
    * data: 参数 - 仅有调app事件持有
    */
 })
+// app 调用 js 方法
+jsMethod(name).then((res) => {
+  /**
+   * name: 事件名
+   * data: 参数 - 仅有调app事件持有
+   */
+})
 ```
+
+##### 
 
 - 这个交互事件必须由 app 和前端一起去处理，单方面是无法成功的
   可以参考我的这篇文章： https://blog.csdn.net/weixin_44205605/article/details/106985069
@@ -438,10 +452,10 @@ import { ReactComponents } from 'zzy-javascript-devtools';
  *  @param {String} type 主题
  *    0 - 黑色主题
  *    1 - 白色
+      不传  默认为白色主题，背景为空(透明)
  *  @param {Boolean} noArrow 是否隐藏箭头
  *    true - 隐藏
  *    false - 显示
-      不传  默认为白色主题，背景为空(透明)
  *  @param {Function} arrowBack 返回事件
  *  @param {String} title 标题
  *  @param {String} rigTxt 右侧文字 不传则隐藏

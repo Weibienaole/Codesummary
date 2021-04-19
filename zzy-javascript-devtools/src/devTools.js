@@ -403,7 +403,7 @@ class DevTools {
 
   // 不显示 console.log
   rewirteLog() {
-    console.log = function(){}
+    console.log = function () { }
   }
 
   // 增强版typeOf typeOf 关键字对于null，date 都会认为是Object，不准确
@@ -673,6 +673,20 @@ class DevTools {
       window.setupWebViewJavascriptBridge(function (bridge) {
         bridge.callHandler(name, data, function (result) {
           reslove(result)
+        })
+      })
+    })
+  }
+  // app 调用 js 方法
+  /**
+   * name: 事件名
+   */
+  jsMethod(name) {
+    return new Promise(function (reslove, reject) {
+      if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！')
+      window.setupWebViewJavascriptBridge((bridge) => {
+        bridge.registerHandler(name, (data) => {
+          reslove(data)
         })
       })
     })

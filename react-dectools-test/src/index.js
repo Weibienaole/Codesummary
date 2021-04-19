@@ -38,7 +38,6 @@ devtools.appMethod(name, data).then(res=>{
 // rem 设置
 devtools.setDomRem(8)
 
-console.log(regModules.isPassport('E00000000'));
 
 
 /**

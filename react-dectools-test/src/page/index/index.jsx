@@ -128,6 +128,9 @@ class PagePage extends Component {
     }
     return content
   }
+  parentsCLick(e) {
+    console.log(e.target, e.target.id)
+  }
   render() {
     let { scrollHeight, total, rowHeight } = this
     return (
@@ -169,6 +172,15 @@ class PagePage extends Component {
             </div>
           </div>
         )}
+        <div onClick={(e) => this.parentsCLick(e)}>
+          {Array(100)
+            .fill(null)
+            .map((item, index) => (
+              <li className="chilerenLi" id={`idLi${index}`} key={index}>
+                i am li, i key -- {index}
+              </li>
+            ))}
+        </div>
       </div>
     )
   }
