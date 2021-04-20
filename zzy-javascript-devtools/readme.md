@@ -11,16 +11,20 @@ npm i zzy-javascript-devtools
 ## 使用
 
 ```javascript
-import { regModules, devtools, ReactComponents } from 'zzy-javascript-devtools'
+import { regModules, devtools, ReactComponents, JSBridge } from 'zzy-javascript-devtools'
 
-// regModules 为正则模块  devtools 为方法模块  ReactComponents 为 React组件
+// regModules 为正则模块  devtools 为方法模块  ReactComponents 为 React组件  JSBridge 为 JS&app交互事件
 // example：
 regModules.isPhone(13412341234) // true
 devtools.bottomVisible() // false
 <ReactComponents.Img></ReactComponents.Img>
+JSBridge.init()
 ```
 
 ## 版本更新历史
+- 1.3.1
+  - 新增 JSBridge 组
+  - 优化
 - 1.3.0
   - devtools
     - 新增一个之前未标明的方法，并进行优化

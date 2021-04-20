@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect, createRef } from 'react'
 import { withRouter } from 'react-router-dom'
-import { devtools, ReactComponents } from 'zzy-javascript-devtools'
+import { devtools, ReactComponents, JSBridge } from 'zzy-javascript-devtools'
 import faker from 'faker'
 
 import './index.css'
@@ -65,6 +65,7 @@ class PagePage extends Component {
     // let url = window.location.href
     // console.log(token)
     devtools.lazyImage()
+console.log(JSBridge.appMethod('a'));
   }
   getData() {
     let that = this
@@ -181,6 +182,7 @@ class PagePage extends Component {
               </li>
             ))}
         </div>
+        <ReactComponents.TopBar title='title'></ReactComponents.TopBar>
       </div>
     )
   }

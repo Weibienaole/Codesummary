@@ -656,41 +656,6 @@ class DevTools {
   }
 
 
-  // app&js
-  // JSBriged 交互处理方式 ios/android 通用
-  /*
-    appMethod(name, data).then(res=>{
-      // 回调返回数据
-    })
-  */
-  appMethod(name, data = null) {
-    /**
-     * name: 事件名
-     * data: 参数 - 仅有调app事件持有
-     */
-    return new Promise(function (reslove, reject) {
-      if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！')
-      window.setupWebViewJavascriptBridge(function (bridge) {
-        bridge.callHandler(name, data, function (result) {
-          reslove(result)
-        })
-      })
-    })
-  }
-  // app 调用 js 方法
-  /**
-   * name: 事件名
-   */
-  jsMethod(name) {
-    return new Promise(function (reslove, reject) {
-      if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！')
-      window.setupWebViewJavascriptBridge((bridge) => {
-        bridge.registerHandler(name, (data) => {
-          reslove(data)
-        })
-      })
-    })
-  }
 }
 
 module.exports = DevTools

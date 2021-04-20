@@ -1,10 +1,12 @@
+"use strict";
+
 function init() {
   /*
   html引入 - 直接引入
   框架引入 - 代码拷贝到入口文件 - react -> index.js
       utils存放appinteractive.js
       需要使用时文件内import引入即可
-*/
+  */
 
   /**
    * 使用 JSBridge 总结：
@@ -16,13 +18,11 @@ function init() {
    *      ②、使用 andoirFunction 并且要在 setupWebViewJavascriptBridge 中执行 bridge.init 方法，
    *          安卓才可以正常调用 H5 的回调函数，并且 H5 调用安卓成功后的回调函数也可以正常执行了
    */
+  var u = navigator.userAgent; // Android终端
 
-  const u = navigator.userAgent
-  // Android终端
-  const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
-  // IOS 终端
-  const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; // IOS 终端
 
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
   /**
    * Android  与安卓交互时：
    *      1、不调用这个函数安卓无法调用 H5 注册的事件函数；
@@ -33,53 +33,54 @@ function init() {
    *
    * @param {*} callback
    */
-  const andoirFunction = (callback) => {
-    if (window.WebViewJavascriptBridge) {
-      callback(window.WebViewJavascriptBridge)
-    } else {
-      document.addEventListener(
-        'WebViewJavascriptBridgeReady',
-        function () {
-          callback(window.WebViewJavascriptBridge)
-        },
-        false
-      )
-    }
-  }
 
+  var andoirFunction = function andoirFunction(callback) {
+    if (window.WebViewJavascriptBridge) {
+      callback(window.WebViewJavascriptBridge);
+    } else {
+      document.addEventListener('WebViewJavascriptBridgeReady', function () {
+        callback(window.WebViewJavascriptBridge);
+      }, false);
+    }
+  };
   /**
    * IOS 与 IOS 交互时，使用这个函数即可，别的操作都不需要执行
    * @param {*} callback
    */
-  const iosFuntion = (callback) => {
-    if (window.WebViewJavascriptBridge) {
-      return callback(window.WebViewJavascriptBridge)
-    }
-    if (window.WVJBCallbacks) {
-      return window.WVJBCallbacks.push(callback)
-    }
-    window.WVJBCallbacks = [callback]
-    var WVJBIframe = document.createElement('iframe')
-    WVJBIframe.style.display = 'none'
-    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
-    document.documentElement.appendChild(WVJBIframe)
-    setTimeout(function () {
-      document.documentElement.removeChild(WVJBIframe)
-    }, 0)
-  }
 
+
+  var iosFuntion = function iosFuntion(callback) {
+    if (window.WebViewJavascriptBridge) {
+      return callback(window.WebViewJavascriptBridge);
+    }
+
+    if (window.WVJBCallbacks) {
+      return window.WVJBCallbacks.push(callback);
+    }
+
+    window.WVJBCallbacks = [callback];
+    var WVJBIframe = document.createElement('iframe');
+    WVJBIframe.style.display = 'none';
+    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+    document.documentElement.appendChild(WVJBIframe);
+    setTimeout(function () {
+      document.documentElement.removeChild(WVJBIframe);
+    }, 0);
+  };
   /**
    * 注册 setupWebViewJavascriptBridge 方法
    *  之所以不将上面两个方法融合成一个方法，是因为放在一起，那么就只有 iosFuntion 中相关的方法体生效
    */
-  window.setupWebViewJavascriptBridge = isAndroid ? andoirFunction : iosFuntion
-  console.log(isAndroid, 'isAndroid, 是否安卓')
 
+
+  window.setupWebViewJavascriptBridge = isAndroid ? andoirFunction : iosFuntion;
+  console.log(isAndroid, 'isAndroid, 是否安卓');
   /**
    * 这里如果不做判断是不是安卓，而是直接就执行下面的方法，就会导致
    *      1、IOS 无法调用 H5 这边注册的事件函数
    *      2、H5 可以正常调用 IOS 这边的事件函数，并且 H5 的回调函数可以正常执行
    */
+
   if (isAndroid) {
     /**
      * 与安卓交互时，不调用这个函数会导致：
@@ -90,47 +91,55 @@ function init() {
     window.setupWebViewJavascriptBridge(function (bridge) {
       // 注册 H5 界面的默认接收函数（与安卓交互时，不注册这个事件无法接收回调函数）
       bridge.init(function (msg, responseCallback) {
-        responseCallback('JS 返回给原生的消息内容')
-      })
-    })
+        responseCallback('JS 返回给原生的消息内容');
+      });
+    });
   }
-}
-
-
-// app&js
+} // app&js
 // JSBriged 交互处理方式 ios/android 通用
+
 /*
   appMethod(name, data).then(res=>{
     // 回调返回数据
   })
 */
-function appMethod(name, data = null) {
+
+
+function appMethod(name) {
+  var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
   /**
    * name: 事件名
    * data: 参数 - 仅有调app事件持有
    */
   return new Promise(function (reslove, reject) {
-    if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！')
+    if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！');
     window.setupWebViewJavascriptBridge(function (bridge) {
       bridge.callHandler(name, data, function (result) {
-        reslove(result)
-      })
-    })
-  })
-}
-// app 调用 js 方法
+        reslove(result);
+      });
+    });
+  });
+} // app 调用 js 方法
+
 /**
  * name: 事件名
  */
+
+
 function jsMethod(name) {
   return new Promise(function (reslove, reject) {
-    if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！')
-    window.setupWebViewJavascriptBridge((bridge) => {
-      bridge.registerHandler(name, (data) => {
-        reslove(data)
-      })
-    })
-  })
+    if (!window.setupWebViewJavascriptBridge) return reject('请先将 JSBriged.js 引入！');
+    window.setupWebViewJavascriptBridge(function (bridge) {
+      bridge.registerHandler(name, function (data) {
+        reslove(data);
+      });
+    });
+  });
 }
 
-module.exports = { appMethod, jsMethod, init }
+module.exports = {
+  appMethod: appMethod,
+  jsMethod: jsMethod,
+  init: init
+};
