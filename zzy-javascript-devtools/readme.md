@@ -22,32 +22,34 @@ JSBridge.init()
 ```
 
 ## 版本更新历史
+
 - 1.3.1
-  - 新增 JSBridge 组
-  - 优化
+  - 新增 JSBridge 组，旧 JSBridge 由于压缩问题无法正常使用-。=
+  - 优化 uglifyjs.js 更加简洁，归拢命令文件
+  - Ps: 为什么每次都能忘记标注一些东西呢...
 - 1.3.0
   - devtools
     - 新增一个之前未标明的方法，并进行优化
-    - 新增app调用js方法
+    - 新增 app 调用 js 方法
 - 1.2.9
   - 本次改动目的为优化、压缩
     - 将所有文件进行压缩处理，更加精致
 - 1.2.6 & 1.2.7 & 1.2.8
   - ReactComponents
-    -  NoData 组件支持自定义图片，并可以传入 style props 来设置图片的大小
+    - NoData 组件支持自定义图片，并可以传入 style props 来设置图片的大小
     - Img 组件
-      - 防止require搞事情，新增一个简单的兼容
-      - 新增click点击事件，可以点击图片做一些事情
-    - TopBar 组件 代码简化，箭头图片换成了svg格式
+      - 防止 require 搞事情，新增一个简单的兼容
+      - 新增 click 点击事件，可以点击图片做一些事情
+    - TopBar 组件 代码简化，箭头图片换成了 svg 格式
     - readme.md 更新
 - 1.2.5
-  - 新增React Components
-  - 大幅减少包大小 现在压缩之后仅3.1k
-  - 由于react需要转化为ES5，顺便将所有的文件转译成了ES5语法
-  - 调整readme.md的布局，不再拉垮
-
+  - 新增 React Components
+  - 大幅减少包大小 现在压缩之后仅 3.1k
+  - 由于 react 需要转化为 ES5，顺便将所有的文件转译成了 ES5 语法
+  - 调整 readme.md 的布局，不再拉垮
 
 ## 简述
+
 ### regModules
 
 #### 正则模块方法返回值皆为 **Boolean**
@@ -343,35 +345,6 @@ devtools.infinityScrolling(document.querySelector('.bottomScrollBar'), () => {
 - 返回指定元素的生效样式
 - example: getDomStyle(document.querySelector('p'), 'font-size')
 
-##### app&js
-
-###### JSBriged()
-
-- 交互处理方式 ios/android 通用
-- 前置条件：必须先在 html/框架内引入 JSBriged script/入口文件 引入
-
-```javascript
-// js 调用 app 方法
-appMethod(name, data).then((res) => {
-  /**
-   * name: 事件名
-   * data: 参数 - 仅有调app事件持有
-   */
-})
-// app 调用 js 方法
-jsMethod(name).then((res) => {
-  /**
-   * name: 事件名
-   * data: 参数 - 仅有调app事件持有
-   */
-})
-```
-
-##### 
-
-- 这个交互事件必须由 app 和前端一起去处理，单方面是无法成功的
-  可以参考我的这篇文章： https://blog.csdn.net/weixin_44205605/article/details/106985069
-
 ### ReactComponents
 
 ##### 无限滚动触发块(搭载 devtools.infinityScrolling) ScrollLoadingBar
@@ -387,7 +360,6 @@ jsMethod(name).then((res) => {
 
 // example:
 import { ReactComponents } from 'zzy-javascript-devtools';
-
 <ReactComponents.ScrollLoadingBar
   getMoreData={() => this.getData()}
 ></ReactComponents.ScrollLoadingBar>
@@ -401,7 +373,6 @@ import { ReactComponents } from 'zzy-javascript-devtools';
 
 ```javascript
 import { ReactComponents } from 'zzy-javascript-devtools';
-
 <ReactComponents.ErrorBoundary>
   // 包裹住 Route
   <Route />
@@ -422,11 +393,10 @@ import { ReactComponents } from 'zzy-javascript-devtools';
 
 // example:
 import { ReactComponents } from 'zzy-javascript-devtools';
-
 <ReactComponents.Img
-  src="link" 
-  className="className" 
-  click={()=>console.log('click!')}
+  src="link"
+  className="className"
+  click={() => console.log('click!')}
 ></ReactComponents.Img>
 ```
 
@@ -441,7 +411,6 @@ import { ReactComponents } from 'zzy-javascript-devtools';
 
 // example
 import { ReactComponents } from 'zzy-javascript-devtools';
-
 <ReactComponents.NoData
   say={'asasasas'}
   style={{ width: '16.25rem', height: '15.69rem' }}
@@ -468,7 +437,6 @@ import { ReactComponents } from 'zzy-javascript-devtools';
 
 // example:
 import { ReactComponents } from 'zzy-javascript-devtools';
-
 <ReactComponents.TopBar
   type="0"
   title="i am title"
@@ -477,3 +445,47 @@ import { ReactComponents } from 'zzy-javascript-devtools';
   clickRigTxt={() => this.secrch()}
 ></ReactComponents.TopBar>
 ```
+
+### JSBriged
+
+- 交互处理方式 ios/android 通用
+- 前置条件：必须先在 html/框架(入口文件)内调用 JSBriged.init 方法进行初始化
+
+##### JSBriged.init
+
+- 初始化 JSBridge
+
+##### JSBriged.appMethod
+
+- js 调用 app 方法
+
+```javascript
+// js 调用 app 方法
+/**
+ * @param {String} name 事件名
+ * @param {any} data 参数 - 仅有调app事件持有
+ */
+appMethod(name, data).then((res) => {
+  // ... some code
+})
+```
+
+##### JSBriged.jsMethod
+
+- app 调用 js 方法
+
+```javascript
+// app 调用 js 方法
+/**
+ * @param {String} name 事件名
+ */
+jsMethod(name).then((res) => {
+  /**
+   * name: 事件名
+   */
+})
+```
+#####
+
+- 这个交互事件必须由 app 和前端一起去处理，单方面是无法成功的
+  可以参考我的这篇文章： https://blog.csdn.net/weixin_44205605/article/details/106985069
