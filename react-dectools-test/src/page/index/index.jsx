@@ -1,10 +1,8 @@
 import React, { Component, useState, useEffect, createRef } from 'react'
 import { withRouter } from 'react-router-dom'
 import { devtools, ReactComponents, JSBridge } from 'zzy-javascript-devtools'
-import faker from 'faker'
 
 import './index.css'
-import request from '../../utils/request'
 
 const list = ({ i, style, data }) => {
   return (
@@ -65,7 +63,6 @@ class PagePage extends Component {
     // let url = window.location.href
     // console.log(token)
     devtools.lazyImage()
-console.log(JSBridge.appMethod('a'));
   }
   getData() {
     let that = this
@@ -129,9 +126,6 @@ console.log(JSBridge.appMethod('a'));
     }
     return content
   }
-  parentsCLick(e) {
-    console.log(e.target, e.target.id)
-  }
   render() {
     let { scrollHeight, total, rowHeight } = this
     return (
@@ -173,16 +167,67 @@ console.log(JSBridge.appMethod('a'));
             </div>
           </div>
         )}
-        <div onClick={(e) => this.parentsCLick(e)}>
-          {Array(100)
-            .fill(null)
-            .map((item, index) => (
-              <li className="chilerenLi" id={`idLi${index}`} key={index}>
-                i am li, i key -- {index}
-              </li>
-            ))}
-        </div>
-        <ReactComponents.TopBar title='title'></ReactComponents.TopBar>
+        <div className="container">
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <br />
+           <ReactComponents.Img
+             src="https://www.babeljs.cn/img/babel.png"
+             className="img"
+             click={() => console.log(1, 'click')}
+           ></ReactComponents.Img>
+         </div>
+         <ReactComponents.ScrollLoadingBar
+           getMoreData={() => this.getData()}
+         ></ReactComponents.ScrollLoadingBar>
+        {/* <ReactComponents.TopBar title="title"></ReactComponents.TopBar> */}
       </div>
     )
   }

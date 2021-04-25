@@ -38,7 +38,7 @@ devtools.appMethod(name, data).then(res=>{
 // rem 设置
 devtools.setDomRem(8)
 
-JSBridge.init()
+devtools.JSB_init()
 
 
 

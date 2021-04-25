@@ -11,18 +11,21 @@ npm i zzy-javascript-devtools
 ## 使用
 
 ```javascript
-import { regModules, devtools, ReactComponents, JSBridge } from 'zzy-javascript-devtools'
+import { regModules, devtools, ReactComponents } from 'zzy-javascript-devtools'
 
 // regModules 为正则模块  devtools 为方法模块  ReactComponents 为 React组件  JSBridge 为 JS&app交互事件
 // example：
 regModules.isPhone(13412341234) // true
 devtools.bottomVisible() // false
 <ReactComponents.Img></ReactComponents.Img>
-JSBridge.init()
 ```
 
 ## 版本更新历史
 
+-1.3.2
+  - 经过一系列的排查，我终于意识到了压缩代码的严重性... 所以从此版本开始不再进行代码压缩，只进行语法转译(裂开.jpg)
+  - 由于取消了代码压缩，所以JSBridge可以合并到devtools里(所以说我这几个版本改了个寂寞？？)
+  - 修复一些奇怪的bug
 - 1.3.1
   - 新增 JSBridge 组，旧 JSBridge 由于压缩问题无法正常使用-。=
   - 优化 uglifyjs.js 更加简洁，归拢命令文件
@@ -345,6 +348,50 @@ devtools.infinityScrolling(document.querySelector('.bottomScrollBar'), () => {
 - 返回指定元素的生效样式
 - example: getDomStyle(document.querySelector('p'), 'font-size')
 
+##### 与app之间的交互(JSBridge)
+
+- 交互处理方式 ios/android 通用
+- 前置条件：必须先在 html/框架(入口文件)内调用 JSBriged.init 方法进行初始化
+
+###### JSB_init
+
+- 初始化 JSBridge
+
+###### JSB_appMethod
+
+- js 调用 app 方法
+
+```javascript
+// js 调用 app 方法
+/**
+ * @param {String} name 事件名
+ * @param {any} data 参数 - 仅有调app事件持有
+ */
+devtools.JSB_appMethod(name, data).then((res) => {
+  // ... some code
+})
+```
+
+###### JSB_jsMethod
+
+- app 调用 js 方法
+
+```javascript
+// app 调用 js 方法
+/**
+ * @param {String} name 事件名
+ */
+devtools.JSB_jsMethod(name).then((res) => {
+  /**
+   * name: 事件名
+   */
+})
+```
+#####
+
+- 这个交互事件必须由 app 和前端一起去处理，单方面是无法成功的
+  可以参考我的这篇文章： https://blog.csdn.net/weixin_44205605/article/details/106985069
+
 ### ReactComponents
 
 ##### 无限滚动触发块(搭载 devtools.infinityScrolling) ScrollLoadingBar
@@ -445,47 +492,3 @@ import { ReactComponents } from 'zzy-javascript-devtools';
   clickRigTxt={() => this.secrch()}
 ></ReactComponents.TopBar>
 ```
-
-### JSBriged
-
-- 交互处理方式 ios/android 通用
-- 前置条件：必须先在 html/框架(入口文件)内调用 JSBriged.init 方法进行初始化
-
-##### JSBriged.init
-
-- 初始化 JSBridge
-
-##### JSBriged.appMethod
-
-- js 调用 app 方法
-
-```javascript
-// js 调用 app 方法
-/**
- * @param {String} name 事件名
- * @param {any} data 参数 - 仅有调app事件持有
- */
-appMethod(name, data).then((res) => {
-  // ... some code
-})
-```
-
-##### JSBriged.jsMethod
-
-- app 调用 js 方法
-
-```javascript
-// app 调用 js 方法
-/**
- * @param {String} name 事件名
- */
-jsMethod(name).then((res) => {
-  /**
-   * name: 事件名
-   */
-})
-```
-#####
-
-- 这个交互事件必须由 app 和前端一起去处理，单方面是无法成功的
-  可以参考我的这篇文章： https://blog.csdn.net/weixin_44205605/article/details/106985069

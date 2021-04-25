@@ -1,6 +1,6 @@
+
 const RegModules = require('./lib/regModule.min')
 const DevTools = require('./lib/devTools.min')
-const JSBridge = require('./lib/JSBriged')
 const ReactComponents = require('./lib/reactComponents/index.min')
 
 // html引入 import 方式替换require处理
@@ -12,7 +12,7 @@ let regModules = new RegModules()
 
 // html引入
 // export default { devtools }
-module.exports = { devtools, regModules, ReactComponents, JSBridge }
+module.exports = { devtools, regModules, ReactComponents }
 // export default 
 
 
