@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect, createRef } from 'react'
 import { withRouter } from 'react-router-dom'
-import { devtools, ReactComponents, JSBridge } from 'zzy-javascript-devtools'
+import { devtools, ReactComponents } from 'zzy-javascript-devtools'
 
 import './index.css'
 
@@ -62,6 +62,8 @@ class PagePage extends Component {
     console.log(window.location.href)
     // let url = window.location.href
     // console.log(token)
+    console.log();
+    devtools.JSB_appMethod('aaa')
     devtools.lazyImage()
   }
   getData() {

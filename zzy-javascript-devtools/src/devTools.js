@@ -11,6 +11,7 @@ class DevTools {
   ];
   */
   generateTree(items, parentId = null, selectVal = 'parentId') {
+    let a, b, cccccccc
     return items.filter(item => item[selectVal] === parentId).map(i => { return { ...i, children: this.generateTree(items, i.id, selectVal) } })
   }
 

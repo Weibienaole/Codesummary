@@ -1,7 +1,7 @@
-let fs = require('fs');
-let UglifyJS = require('uglify-js');
-let getFiles = require('./getFiles')
-const noCompress = ['JSBriged.js'] // 不需要压缩的文件名称
+const fs = require('fs');
+const UglifyJS = require('uglify-js');
+const getFiles = require('./getFiles')
+const noCompress = [] // 不需要压缩的文件名称
 
 // .css 文件手动压缩
 function iGetInnerText(testStr) {
@@ -12,14 +12,10 @@ function iGetInnerText(testStr) {
 }
 
 // 对每个文件进行写入
-function writefs(obj, toPath, pPath = toPath) {
-
-  let allFiles = getFiles(toPath)
-
+function writefs(obj) {
   for (let i in obj) {
     fs.writeFile(obj[i].newPath, obj[i].code, 'utf-8', function (err) {
       if (err) throw err;
-      console.log('success');
       if (i.indexOf('.js') > 0 || i.indexOf('.less') > 0) {
         // 写入完成删除源文件
         fs.unlinkSync(obj[i].form)
@@ -50,7 +46,7 @@ function setFiles(pathTo) {
 }
 
 let Uglify = function (toPath) {
-  writefs(setFiles(toPath), toPath);
+  writefs(setFiles(toPath));
 }
 
 Uglify('./lib');
