@@ -1,0 +1,45 @@
+{
+  // 5
+  /* 一般json文件不允许注释，tsconfig.json 可以 */
+  /*
+    tsconfig.js 是 ts 编译时的配置文件，ts信息可以根据配置来进行编译
+    有这个文件之后，tsc 命令就可以直接群体使用  tsc -- 整体编译   tsc -w  -- 整体动态更新
+
+    include -- 设定编译范围  指定那些文件可以被编译
+      ** -- 任意文件夹
+      *  -- 任意文件
+
+    exclude -- 设定不需要编译的文件夹
+      默认值 ['node_modules', 'bower_components', 'jspm_packages']
+
+    extends -- 继承某个配置文件的内容
+
+    files -- 少量文件需要被编译时，使用 files 指定需要编译的文件
+  */
+  // 6
+  /*
+    compilerOptions:{
+      target: 指定 ts 被编译成的版本
+        可选值 -- 'es3', 'es5', 'es6', 'es2015', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'esnext'  一般 es5
+      module: 指定要使用的模块规范
+        可选值 -- 'none', 'commonjs', 'amd', 'system', 'umd', 'es6', 'es2015', 'es2020', 'esnext' 默认 es2015
+      lib: 指定项目组要使用的库 
+        可选值 -- 'es5', 'es6', 'es2015', 'es7', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'esnext', 'dom', 'dom.iterable', 'webworker', 'webworker.importscripts', 'webworker.iterable', 'scripthost', 'es2015.core', 'es2015.collection', 'es2015.generator', 'es2015.iterable', 'es2015.promise', 'es2015.proxy', 'es2015.reflect', 'es2015.symbol', 'es2015.symbol.wellknown', 'es2016.array.include', 'es2017.object', 'es2017.sharedmemory', 'es2017.string', 'es2017.intl', 'es2017.typedarrays', 'es2018.asyncgenerator', 'es2018.asynciterable', 'es2018.intl', 'es2018.promise', 'es2018.regexp', 'es2019.array', 'es2019.object', 'es2019.string', 'es2019.symbol', 'es2020.bigint', 'es2020.promise', 'es2020.sharedmemory', 'es2020.string', 'es2020.symbol.wellknown', 'es2020.intl', 'esnext.array', 'esnext.symbol', 'esnext.asynciterable', 'esnext.intl', 'esnext.bigint', 'esnext.string', 'esnext.promise', 'esnext.weakref'
+      outDir: 指定编译后 .js 存放的目录
+      outFile: 代码合并为一个文件，并指定文件名称
+    }
+
+  */
+
+  // 5
+  "include": ["./src/**/*"],
+  "exclude": [],
+  // 6
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    // "lib": []
+    "outDir": "./dist",
+    // "outFile": "./dist/app.js"
+  }
+}
