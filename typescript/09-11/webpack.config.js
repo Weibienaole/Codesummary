@@ -7,7 +7,7 @@ module.exports = {
     filename: 'boundle.js',
     path: path.resolve(__dirname, 'dist')
   },
-  devServer:{
+  devServer: {
     port: 8001,
     open: true,
     progress: true
@@ -15,17 +15,40 @@ module.exports = {
   module: {
     rules: [{
       test: /\.ts$/,
-      loader: 'ts-loader'
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: {
+                    version: 3
+                  },
+                  targets: {
+                    chrome: '60',
+                    firefox: '60',
+                    ie: '10',
+                    safari: '10',
+                    edge: '17'
+                  }
+                }]
+            ]
+          }
+        },
+        'ts-loader'
+      ]
     }]
   },
-  plugins:[
+  plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
       hash: true
     }),
   ],
-  resolve:{
+  resolve: {
     extensions: ['.ts', '.js']
   }
 }
