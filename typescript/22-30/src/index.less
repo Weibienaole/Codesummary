@@ -1,0 +1,53 @@
+@bg_c: #b7d7a8;
+body {
+  .container {
+    margin: 100px auto;
+    width: 340px;
+    height: 400px;
+    border: 10px solid;
+    border-radius: 20px;
+    background-color: @bg_c;
+    .activeArea {
+      width: 302px;
+      height: 302px;
+      border: 1px solid;
+      margin: 20px auto;
+      position: relative;
+      .snake {
+        .snakeBlock {
+          width: 10px;
+          height: 10px;
+          background-color: #000;
+          border: 1px solid @bg_c;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+      .food {
+        position: absolute;
+        left: 200px;
+        top: 200px;
+        width: 10px;
+        height: 10px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-content: space-between;
+        >div{
+          width: 4px;
+          height: 4px;
+          background: #000;
+          transform: rotate(45deg);
+        }
+      }
+    }
+    .scorePanel {
+      width: 90%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      font: bold 20px 'Courier';
+    }
+  }
+}
