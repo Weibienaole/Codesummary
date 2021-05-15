@@ -30,11 +30,7 @@ module.exports = {
                   },
                   // 设置兼容浏览器版本
                   targets: {
-                    chrome: '60',
-                    firefox: '60',
-                    ie: '10',
-                    safari: '10',
-                    edge: '17'
+                    browsers: ["> 1%", "last 2 versions", "not ie <= 8", "Android >= 4", "iOS >= 8"]
                   }
                 }]
             ]

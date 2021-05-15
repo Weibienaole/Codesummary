@@ -12,3 +12,5 @@ function po() {
 po().then((res) => console.log(res))
 
 // console.log(sum(1, 2), as)
+
+console.log(...new Set([1,1,2,2,3,4,2,1,2]), 'set');
