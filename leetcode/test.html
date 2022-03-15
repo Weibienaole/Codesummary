@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+  <title>page</title>
+  <link rel="stylesheet" href="">
+</head>
+<style>
+
+</style>
+
+<body>
+  <div class="">
+  </div>
+</body>
+
+<script>
+  console.time()
+
+var longestPalindrome = function (s) {
+  let answer = []
+
+  // 转数组 遍历找出重复字母以及对应的数量
+  let ns = [...s]
+  let ls = [...new Set(ns)]
+  let os = []
+  for (let i = 0; i < ls.length; i++) {
+    let o = {}
+    for (let j = 0; j < ns.length; j++) {
+      if (ns[j] === ls[i]) {
+        o.idxs = o.idxs && [...o.idxs, j] || [j]
+      }
+    }
+    // 排除不足以对称的值
+    if (o.idxs.length > 1) {
+      os.push(
+        {
+          ...o,
+          item: ls[i]
+        }
+      )
+    } else {
+      answer.push(ls[i])
+    }
+  }
+  // 交叉处理，拿到所有可能匹配的项
+  for (let i = 0; i < os.length; i++) {
+    for (let j = 0; j < os[i].idxs.length; j++) {
+      for (let k = os[i].idxs.length - 1; k >= j + 1; k--) {
+        // console.log(os[i].idxs, os[i].idxs[j], os[i].idxs[k]);
+        if (os[i].arr) {
+          os[i].arr.push([os[i].idxs[j], os[i].idxs[k]])
+        } else {
+          os[i].arr = [[os[i].idxs[j], os[i].idxs[k]]]
+        }
+      }
+    }
+  }
+  // console.log(os[0].arr.length);
+  // 依次进行截取对比，对比成功的输入到
+  for (let i = 0; i < os.length; i++) {
+    for (let j in os[i].arr) {
+      let sliceD = os[i].arr[j]
+      let sliceItem = ns.slice(sliceD[0], sliceD[1] + 1)
+      let str = sliceItem.join('')
+      answer.push(str)
+    }
+  }
+  answer.filter(str => str = str.split(',').reverse()).sort((a, b) => b.length - a.length)
+  // answer = answer.sort((a, b) => b.length - a.length)
+  return answer[0] || ''
+}
+
+console.log(longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), 'answer');
+console.timeLog()
+</script>
+
+</html>

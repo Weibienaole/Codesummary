@@ -3,9 +3,9 @@ function sum(a: number, b: number): number {
   return a + b
 }
 function po() {
-  return new Promise((resolve: any) => {
+  return new Promise((resolve: (value: string) => void): void => {
     setTimeout(() => {
-      resolve('a')
+      resolve('aaa')
     }, 1000)
   })
 }
