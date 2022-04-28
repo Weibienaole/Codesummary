@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import style from '../../assets/global-style'
 
@@ -57,6 +58,16 @@ const ProgressCircle = (props) => {
       {props.children}
     </CircleWrapper>
   )
+}
+
+ProgressCircle.defaultProps = {
+  radius: 0,
+  percent: 0
+}
+
+ProgressCircle.propTypes = {
+  radius: PropTypes.number,
+  percent: PropTypes.number,
 }
 
 export default memo(ProgressCircle)

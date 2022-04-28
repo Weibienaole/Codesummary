@@ -12,14 +12,14 @@ import {
 
  
 
-const Home = ({ route }) => {
+const Home = ({ route, history }) => {
 
   return (
     <div id="Home_container">
       <Top>
         <span className="iconfont menu">&#xe65c;</span>
         <span className="title">cloud music~</span>
-        <span className="iconfont search">&#xe62b;</span>
+        <span className="iconfont search" onClick={() => history.push('/search')}>&#xe62b;</span>
       </Top>
       <Tab>
         <NavLink to="recommend" activeClassName="selected">

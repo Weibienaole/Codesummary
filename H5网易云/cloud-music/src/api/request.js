@@ -41,3 +41,28 @@ export const getAlbumListReq = (id) => {
 export const getSingerSongsListReq = id => {
   return axiosInstance.get(`/artists?id=${id}`)
 }
+
+// 获取歌曲歌词
+export const getLyricReq = id => {
+  return axiosInstance.get(`/lyric?id=${id}`)
+}
+
+// 获取热搜列表
+export const getHotKeywordsListReq = () => {
+  return axiosInstance.get(`/search/hot`)
+}
+
+// 搜索建议
+export const getSearchSuggestReq = keywrods => {
+  return axiosInstance.get(`/search/suggest?keywords=${keywrods}`)
+}
+
+// 搜索内容
+export const getSearchResultReq = (keywrods) => {
+  return axiosInstance.get(`search?keywords=${keywrods}`)
+}
+
+// 获取歌曲详情
+export const getSongDetailReq = id => {
+  return axiosInstance.get(`/song/detail?ids=${id}`)
+}

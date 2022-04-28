@@ -6,6 +6,7 @@ import { reducer as rankReducer } from '../application/Rank/store'
 import { reducer as albumReducer } from '../application/Album/store'
 import { reducer as SingerReducer } from '../application/Singer/store'
 import { reducer as PlayerReducer }  from '../application/Player/store'
+import { reducer as SearchReducer }  from '../application/Search/store'
 
 const reducer = combineReducers({
   recommend: recommendReducer,
@@ -13,7 +14,8 @@ const reducer = combineReducers({
   rank: rankReducer,
   album: albumReducer,
   singer: SingerReducer,
-  player: PlayerReducer
+  player: PlayerReducer,
+  search: SearchReducer,
 })
 
 export default reducer

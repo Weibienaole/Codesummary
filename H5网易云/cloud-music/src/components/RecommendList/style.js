@@ -40,7 +40,7 @@ export const ListItem = styled.div`
       right: 2px;
       top: 2px;
       font-size: ${style['font-size-s']};
-      line-heigth: 15px;
+      line-height: 15px;
       color: ${style['font-color-light']};
       .play {
         vertical-align: top;

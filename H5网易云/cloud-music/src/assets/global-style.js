@@ -1,4 +1,5 @@
-const extendCLick = () => {
+// 扩大可点击区域
+const extendClick = () => {
   return `
     position: relative
     &:before {
@@ -29,6 +30,14 @@ const noWraps = (line) => {
   `
 }
 
+const bgFull = () => {
+  return `
+    background-position: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  `
+}
+
 const basicStyle = {
   'theme-color': '#d44439',
   'theme-color-shadow': 'rgba(212, 68, 57, .5)',
@@ -41,6 +50,7 @@ const basicStyle = {
   'font-size-l': '16px',
   'font-size-ll': '18px',
   "border-color": '#e4e4e4',
+  "border-color-v2": "rgba(228, 228, 228, 0.1)",
   'background-color': '#f2f3f4',
   'background-color-shadow': 'rgba(0, 0, 0, 0.3)',
   'highlight-background-color': '#fff',
@@ -48,9 +58,10 @@ const basicStyle = {
 
 const all = {
   ...basicStyle,
-  extendCLick,
+  extendClick,
   noWrap,
   noWraps,
+  bgFull
 }
 
 export default all

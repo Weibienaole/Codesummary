@@ -111,7 +111,7 @@ const Scroll = forwardRef((props, ref) => {
     return () => {
       bScroll.off('scroll')
     }
-  })
+  }, [onScroll, bScroll])
 
   // 上拉到底的判断
   useEffect(() => {

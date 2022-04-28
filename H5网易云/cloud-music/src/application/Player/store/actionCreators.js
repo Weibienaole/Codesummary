@@ -1,6 +1,6 @@
-import * as actionTypes from './constants'
 import { fromJS } from 'immutable'
-import { playMode } from '../../../api/config'
+import * as actionTypes from './constants'
+import { getSongDetailReq } from '../../../api/request'
 
 export const changeFullScreen = data => ({
   type: actionTypes.CHANGE_FULL_SCREEN,
@@ -41,3 +41,29 @@ export const changeCurrentSong = data => ({
   type: actionTypes.CHANGE_CURRENT_SONG,
   data: fromJS(data)
 })
+
+export const deleteSong = data => ({
+  type: actionTypes.DELETE_SONG,
+  data: data
+})
+
+export const insertSong = data => ({
+  type: actionTypes.INSERT_SONG,
+  data
+})
+
+export const changeSpeed = data => ({
+  type: actionTypes.CHANGE_SPEED,
+  data
+})
+
+export const getSongDetail = id => {
+  return dispatch => {
+    getSongDetailReq(id).then(res => {
+      let song = res.songs[0];
+      dispatch(insertSong(song))
+    }).catch(err => {
+      console.error('获取歌曲详情失败！', err);
+    })
+  }
+}
