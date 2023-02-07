@@ -1,0 +1,30 @@
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": 3
+      }
+    ]
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        // 指定版本兼容，或者使用Broswerslist语法
+        "targets": {
+          "ie": 11
+        },
+        // Broswerslist语法: ie 不低于 11 版本，全球超过 0.5% 使用，且还在维护更新的浏览器
+        // 或者在package.json中声明
+        // "targets": "ie >= 11, > 0.5%, not dead",
+        // 基础库 core-js版本 基本上选最新大版本
+        "corejs": 3,
+        // polyfill注入策略
+        "useBuiltIns": false,
+        // 不将es转换为其他模块语法
+        "modules": false
+      }
+    ]
+  ]
+}

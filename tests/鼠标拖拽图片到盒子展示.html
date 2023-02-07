@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+  <title>page</title>
+  <link rel="stylesheet" href="./鼠标拖拽图片到盒子展示.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div id="app">
+    <div class="slide">
+      <div id="list" class="grid">
+        <img class="item"
+          src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8dGVjaHxlbnwwfHx8fDE2NjIwMjM2MDQ&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8NHx8Y2F0fGVufDB8fHx8MTY2MjAyNzg3Nw&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1561948955-570b270e7c36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8OHx8Y2F0fGVufDB8fHx8MTY2MjAyNzg3Nw&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8NXx8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8Nnx8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8N3x8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1579567761406-4684ee0c75b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8OHx8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=100" />
+        <img class="item"
+          src="https://images.unsplash.com/photo-1597733336794-12d05021d510?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8OXx8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=100" />
+      </div>
+    </div>
+    <div id="content"></div>
+  </div>
+</body>
+
+<script>
+  let dragging = false // 是否进行拖动
+  let initial = {} // 初始化数据记录
+  let cloneEl = null // 克隆的 元素
+  let queue = [] // 拖动el队列
+
+  const contentDom = document.getElementById('content')
+
+  document.getElementById('list').addEventListener('mousedown', function (e) {
+    e.preventDefault()
+    // 目标class含有item，且没有cloneEl
+    if (e.target.classList.contains('item') && !cloneEl) {
+      document.getElementById('app').classList.add('active')
+      const el = e.target
+      cloneEl = el.cloneNode(true)
+      cloneEl.classList.add('flutter')
+      const fakeSize = parseInt(100 * randomNum(3, 5))
+      init(e, { width: e.target.offsetWidth }, fakeSize, Math.random())
+      // 虚拟获取图片原图
+      simulate(cloneEl.src.replace(/w=100/g, 'w=' + fakeSize), initial.flag)
+
+      el.parentElement.appendChild(cloneEl)
+      dragging = true // 开始拖动
+
+      // 初始拖动项透明
+      el.classList.add('hide')
+
+      // 将当前el移除hide类名方法push进去，在结束时调用此方法移除
+      queue.push(() => {
+        el.classList.remove('hide')
+      })
+    }
+  })
+
+  window.addEventListener('mousemove', function (e) {
+    if (dragging && cloneEl) {
+      const { clientX, clientY } = e
+      moveFultter(clientX - initial.offsetX, clientY - initial.offsetY, distance(e))
+    }
+  })
+
+  contentDom.addEventListener('mouseup', function (e) {
+    // 如果不是content-- 页面的x - content的left = content.offsetX
+    if (e.target.id !== 'content') {
+      const lostX = e.x - contentDom.getBoundingClientRect().left
+      const lostY = e.y - contentDom.getBoundingClientRect().top
+      done(lostX, lostY)
+    } else {
+      done(e.offsetX, e.offsetY)
+    }
+
+  })
+
+  window.addEventListener('mouseup', function () {
+    dragging = false
+    document.getElementById('app').classList.remove('active')
+    let timer = setTimeout(() => {
+      clearTimeout(timer)
+      end()
+    }, 300);
+  })
+
+  document.addEventListener('mouseleave', function () {
+    end()
+  })
+  window.onblur = () => {
+    end()
+  }
+  // 初始化记录最开始的位置，以及调用move
+  function init ({ clientX, clientY, offsetX, offsetY }, { width }, fakeSize, flag) {
+    initial = { clientX, clientY, offsetX, offsetY, width, fakeSize, flag }
+    moveFultter(clientX - offsetX, clientY - offsetY)
+  }
+  // 移动目标
+  function moveFultter (x, y, d = 0) {
+    const scale = d ? initial.width + d <= initial.fakeSize ? `transform: scale(${(initial.width + d) / initial.width})` : null : null
+    const options = [`left: ${x}px`, `top: ${y}px`]
+    scale && options.push(scale)
+    changeStyle(options)
+  }
+  // 实际更改动画fn
+  function changeStyle (styles) {
+    const styArrs = cloneEl.style.cssText.split(';')
+    styArrs.pop()
+    cloneEl.style.cssText = [...styArrs, ...styles].join(';') + ';'
+  }
+
+  function end () {
+    dragging = false
+    if (!cloneEl) return
+    cloneEl.classList.add('is_return')
+    changeStyle([`left: ${initial.clientX - initial.offsetX}px`, `top: ${initial.clientY - initial.offsetY}px`, `transform: scale(1)`])
+    let timer = setTimeout(() => {
+      queue.length && queue.shift()()
+      cloneEl && cloneEl.remove()
+      cloneEl = null
+      clearTimeout(timer)
+    }, 300);
+  }
+
+  function done (x, y) {
+    if (!cloneEl) return
+    const newEl = cloneEl.cloneNode(true)
+    newEl.classList.remove('flutter')
+    newEl.src = cloneEl.getAttribute('raw')
+    // 最终计算时 x为鼠标在content中的偏移量 - 该图片的偏移量
+    newEl.style.cssText = `left: ${x - initial.offsetX}px;top: ${y - initial.offsetY}px`
+    contentDom.appendChild(newEl)
+
+    cloneEl.remove()
+    cloneEl = null
+    queue.length && queue.shift()()
+
+  }
+
+  function simulate (url, flag) {
+    cloneEl.setAttribute('raw', url)
+    const image = new Image()
+    image.src = url
+    image.onload = function () {
+      // 异步任务，克隆点可能先被清理掉
+      cloneEl && initial.flag === flag && (cloneEl.src = url)
+    }
+  }
+
+  function randomNum (m, n) {
+    return Math.random() * (m - n) + n
+  }
+
+  //  计算两点之间距离
+  function distance ({ clientX, clientY }) {
+    const { clientX: x, clientY: y } = initial
+    const a = clientX - x
+    const b = clientY - y
+    return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))
+  }
+
+</script>
+
+</html>

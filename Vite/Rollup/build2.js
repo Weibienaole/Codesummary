@@ -5,7 +5,8 @@ async function build(){
   const bundle = await rollup.rollup({
     input: ['./src/index2.js'],
   });
-  console.log(JSON.parse(util.inspect(bundle)));
+  // util.inspect 返回对象的字符串表现形式
+  console.log(util.inspect(bundle));
 }
 
 build()
