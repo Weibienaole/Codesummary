@@ -1,0 +1,16 @@
+{
+  "name": "vite-react-ssg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Arthas",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "island dev docs",
+    "build": "island build docs",
+    "preview": "island start docs"
+  },
+  "dependencies": {
+    "islandjs": "^0.7.31"
+  }
+}
