@@ -1,9 +1,7 @@
 import { cac } from 'cac'
 import * as path from 'path'
-import * as fs from 'fs-extra'
-import type { RollupOutput } from 'rollup'
-import createDevServer from './dev'
 import { build } from './build'
+import createDevServer from './dev'
 
 const version = require('../../package.json').version
 
@@ -20,11 +18,7 @@ cli
   .command('build [node]', 'zisland build development')
   .action(async (root: string) => {
     try {
-      root = path.resolve(root)
-      const [clientBoundle, serverBoundle] = await build(root)
-      const serverEnterPath = path.join(root, 'runtime', 'ssr-entry.tsx')
-      const { render } = require(serverEnterPath)
-      await renderPage(render, root, clientBoundle)
+      build(root)
     } catch (e) {
       console.log('err', e)
     }
@@ -32,10 +26,3 @@ cli
 
 cli.parse()
 
-async function renderPage(
-  render: () => string,
-  root: string,
-  boundle: RollupOutput
-) {
-  
-}
