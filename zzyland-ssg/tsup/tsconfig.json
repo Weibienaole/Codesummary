@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "ESNext",
+    "module": "CommonJS",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "esModuleInterop": true
+  },
+  "exclude": ["tsup.config.ts"]
+}

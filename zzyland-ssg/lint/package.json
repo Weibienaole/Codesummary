@@ -1,0 +1,52 @@
+{
+  "name": "zisland-mvp",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Arthas",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "tsup --watch",
+    "build": "tsup",
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx ./",
+    "prepare": "husky install"
+  },
+  "bin": {
+    "zisland": "bin/island.js"
+  },
+  "lint-staged":{
+    "**/*.{js,jsx,ts,tsx}":[
+      "eslint --fix"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7",
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^18.11.7",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "commitlint": "^17.6.7",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "ora": "^7.0.1",
+    "prettier": "^3.0.1",
+    "rollup": "^3.27.2",
+    "tsup": "^7.2.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "2.2.0",
+    "cac": "^6.7.14",
+    "fs-extra": "^11.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite": "^4.4.8"
+  }
+}
