@@ -41,3 +41,7 @@ function getUserConfigPath(root: string) {
     throw e
   }
 }
+
+export function defineConfig(config: UserConfig) {
+  return config
+}
