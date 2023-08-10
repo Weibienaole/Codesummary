@@ -1,17 +1,24 @@
 import { cac } from 'cac'
 import * as path from 'path'
 import { build } from './build'
-import createDevServer from './dev'
 
 const version = require('../../package.json').version
 
 const cli = cac('zisland').version(version).help()
 
 cli.command('dev [root]', 'zisland dev server').action(async (root: string) => {
-  root = root ? path.resolve(root) : process.cwd()
-  const server = await createDevServer(root)
-  await server.listen()
-  server.printUrls()
+  const createServer = async () => {
+    root = root ? path.resolve(root) : process.cwd()
+    const { createDevServer } = await import('./dev.js')
+    const server = await createDevServer(root, async () => {
+      await server.close()
+      await createServer()
+    })
+    await server.listen()
+    server.printUrls()
+  }
+
+  createServer()
 })
 
 cli

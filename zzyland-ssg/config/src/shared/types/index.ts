@@ -37,3 +37,9 @@ export interface UserConfig {
   themeConfig: ThemeConfig
   vite: ViteConfiguration
 }
+
+export interface SiteConfig {
+  root: string
+  configPath: string
+  siteData: UserConfig
+}

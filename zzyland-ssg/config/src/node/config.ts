@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import fs from 'fs-extra'
 import { loadConfigFromFile } from 'vite'
 
-import { UserConfig } from './shared/types'
+import { SiteConfig, UserConfig } from '../shared/types'
 
 type RawConfig =
   | UserConfig
@@ -10,6 +10,21 @@ type RawConfig =
   | (() => UserConfig | Promise<UserConfig>)
 
 export async function resolveConfig(
+  root: string,
+  command: 'serve' | 'build',
+  mode: 'production' | 'development'
+): Promise<SiteConfig> {
+  const [configPath, userConfig] = await resolveUserConfig(root, command, mode)
+
+  const siteConfig: SiteConfig = {
+    root,
+    configPath,
+    siteData: resolveSiteData(userConfig as UserConfig)
+  }
+  return siteConfig
+}
+
+async function resolveUserConfig(
   root: string,
   command: 'serve' | 'build',
   mode: 'production' | 'development'
@@ -26,6 +41,15 @@ export async function resolveConfig(
     return [configPath, userConfig] as const
   } else {
     return [configPath, {} as UserConfig] as const
+  }
+}
+
+export function resolveSiteData(userConfig: UserConfig): UserConfig {
+  return {
+    title: userConfig.title || 'zIsland.js',
+    description: userConfig.description || 'SSG Framework',
+    themeConfig: userConfig.themeConfig || {},
+    vite: userConfig.vite || {}
   }
 }
 

@@ -5,7 +5,8 @@
     "module": "CommonJS",
     "rootDir": "src",
     "jsx": "react-jsx",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "src"
   },
   "exclude": ["tsup.config.ts"]
 }

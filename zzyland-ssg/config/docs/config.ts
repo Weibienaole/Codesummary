@@ -1,3 +1,4 @@
 export default {
-  a: 1
+  title: 'zzy',
+  description:'iamzzy'
 }
