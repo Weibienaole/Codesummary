@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`add > "1" 1`] = `"ap"`;
+
+exports[`add > "123" 1`] = `"ap"`;
+
+exports[`add > "a" 1`] = `"ap"`;
+
+exports[`add > "ap" 1`] = `"ap"`;
+
+exports[`add > "aps" 1`] = `"ap"`;
+
+exports[`add 1`] = `"ap"`;
