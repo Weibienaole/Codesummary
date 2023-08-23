@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import siteConfig from 'zisland:site-data'
+// import siteConfig from 'zisland:site-data'
 
 export function Layout() {
   const [count, setCount] = useState(0)
-  console.log(siteConfig, 'siteConfig')
+  // console.log(siteConfig, 'siteConfig')
 
   return (
     <div>
