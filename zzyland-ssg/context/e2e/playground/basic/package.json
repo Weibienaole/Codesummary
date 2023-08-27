@@ -1,0 +1,23 @@
+{
+  "name": "basic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "zisland dev docs",
+    "build": "zisland build docs",
+    "preview": "zisland start docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "zisland": "../.."
+  },
+  "devDependencies": {
+    "tsx": "^3.12.7"
+  }
+}
