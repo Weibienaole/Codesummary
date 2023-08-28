@@ -4,6 +4,7 @@ import 'uno.css'
 import '../style/base.css'
 import '../style/vars.css'
 import Nav from '../components/Nav'
+import HomeLayout from '..//HomeLayout'
 
 export function Layout() {
   const pageData = usePageData()
@@ -13,7 +14,7 @@ export function Layout() {
 
   const renderContent = () => {
     if (pageType === 'home') {
-      return <div>home</div>
+      return <HomeLayout />
     } else if (pageType === 'doc') {
       return <div>doc</div>
     } else if (pageType === 'custom') {
@@ -26,8 +27,8 @@ export function Layout() {
   return (
     <div>
       <Nav />
+      {renderContent()}
       {/* <Content /> */}
-      {/* {renderContent()} */}
     </div>
   )
 }
