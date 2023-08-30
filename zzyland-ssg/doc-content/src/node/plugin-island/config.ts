@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite'
 import { join } from 'path'
+import sirv from 'sirv'
 
 import { SiteConfig } from 'shared/types'
 import { PACKAGE_ROOT } from 'node/constants'
@@ -45,6 +46,10 @@ export default function pluginConfig(
           }
         }
       }
+    },
+    configureServer(server) {
+      const publicDir = join(config.root, 'public')
+      server.middlewares.use(sirv(publicDir))
     }
   }
 }
