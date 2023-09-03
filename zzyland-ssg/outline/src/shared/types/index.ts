@@ -50,7 +50,7 @@ export type PageType = 'home' | 'doc' | 'custom' | '404'
 export interface Header {
   id: string
   text: string
-  depth: string
+  depth: string | number
 }
 
 export interface FrontMatter {
@@ -95,5 +95,6 @@ export interface PageData {
 export interface PageModule {
   default: ComponentType
   frontmatter?: FrontMatter
+  toc?: Header[]
   [key: string]: unknown
 }

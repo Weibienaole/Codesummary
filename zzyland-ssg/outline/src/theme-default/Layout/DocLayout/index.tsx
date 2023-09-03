@@ -3,15 +3,17 @@ import { useLocation } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 import styles from './index.module.scss'
 import DocFooter from '../../components/DocFooter'
+import Aside from '../../components/Aside'
 
 const DocLayout = () => {
-  const { siteData } = usePageData()
+  const { siteData, toc } = usePageData()
   const location = useLocation()
   const sidebar = siteData.themeConfig?.sidebar || {}
 
   const { pathname } = location
+
   const findTargetKey = Object.keys(sidebar).find((key) =>
-    pathname.startsWith(key)
+    (pathname.endsWith('/') ? pathname : pathname + '/').startsWith(key)
   )
 
   const targetSideBar = sidebar[findTargetKey] || []
@@ -19,12 +21,16 @@ const DocLayout = () => {
   return (
     <div>
       <Sidebar sidebar={targetSideBar} pathname={pathname} />
-      <div className={styles.content}>
-        <div>
+      <div className={styles.content} flex="~">
+        +{' '}
+        <div className={styles.docContent}>
           <div className="zisland-doc">
             <Content />
           </div>
           <DocFooter />
+        </div>
+        <div className={styles.asideContainer}>
+          <Aside headers={toc} />
         </div>
       </div>
     </div>
