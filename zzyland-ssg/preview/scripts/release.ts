@@ -1,0 +1,106 @@
+import chalk from 'chalk'
+import execa from 'execa'
+import { prompt } from 'enquirer'
+import semver from 'semver'
+import minimist from 'minimist'
+import { createRequire } from 'module'
+import fs from 'fs-extra'
+import path from 'path'
+
+const require = createRequire(import.meta.url)
+
+// 从第三个参数开始获取 yarn relase --dep   dep开始
+const args = minimist(process.argv.slice(2))
+
+const isDry = args.dry
+
+const versionIncrements = ['patch', 'minor', 'major'] as const
+
+const pkg = require('../package.json')
+const currentVersion = pkg.version
+
+const directRun = (bin: string, args: string[]) => {
+  return execa(bin, args, { stdio: 'inherit' })
+}
+
+const dirRun = (bin: string, args: string[]) => {
+  console.log(chalk.blue(`[dryrun] ${bin} ${args.join(' ')}`))
+  return
+}
+
+// 根据命令判断是执行还是log测试
+const run = isDry ? dirRun : directRun
+
+const step = (msg) => console.log(chalk.cyan(msg))
+
+const updateVersion = (version: string) => {
+  pkg.version = version
+  fs.writeFileSync(
+    path.resolve(__dirname, '../package.json'),
+    JSON.stringify(pkg, null, 2)
+  )
+}
+
+const main = async () => {
+  // 1. 确定变动版本级别 `patch | minor | major`，遵循 semver 规范。
+  const { release } = await prompt<{ release: string }>({
+    type: 'select',
+    name: 'release',
+    message: 'Select release type',
+    choices: versionIncrements.map(
+      (i) => `${i} (${semver.inc(currentVersion, i)})`
+    )
+  })
+  const targetVersion = release.match(/\((.*)\)/)![1]
+
+  // 二次确认
+  const { confirm } = await prompt<{ confirm: boolean }>({
+    type: 'confirm',
+    name: 'confirm',
+    message: `Releasing ${targetVersion}. Confirm?`
+  })
+
+  if (!confirm) {
+    return
+  }
+
+  // 2. 执行测试
+  step('\nRunning tests...')
+  await run('yarn', ['test:unit'])
+  await run('yarn', ['test:e2e'])
+
+  // 3. 自动修改包版本
+  if (!isDry) {
+    step('\nUpdate version...')
+    updateVersion(targetVersion)
+  }
+
+  // 4. 执行 yarn build
+  step('\nBuilding package...')
+  await run('yarn', ['build'])
+
+  // 5. 生成 CHANGELOG.md（后面会补充 changelog 命令）
+  step('\nGenerating changelog...')
+  await run('yarn', ['changelog'])
+
+  // 6. 生成 release commit
+  step('\nCommitting changes...')
+  await run('git', ['add', '-A'])
+  await run('git', ['commit', '-m', `'release: v${targetVersion}'`])
+
+  // 7. 执行 npm publish
+  step('\nPublishing packages...')
+  await run('yarn', ['publish', '--access', 'public'])
+
+  // 8. git push 并打 tag
+  step('\nPushing to GitHub...')
+  await run('git', ['tag', `v${targetVersion}`])
+  await run('git', ['push', 'origin', `refs/tags/v${targetVersion}`])
+  await run('git', ['push'])
+}
+
+main().catch((err) => {
+  // 错误兜底处理，回退版本
+  console.log(err)
+  updateVersion(currentVersion)
+})
