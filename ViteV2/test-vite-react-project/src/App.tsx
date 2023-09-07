@@ -1,23 +1,19 @@
 import { useState } from 'react'
-// import reactLogo from '@/assets/react.svg'
-// import { ReactComponent as FangLogo } from '@/assets/react.svg'
-// import { ReactComponent as ViteLogo } from '/vite.svg'
-import { test } from '@/utils/index.ts'
+import reactLogo from '@/assets/react.svg'
+import { ReactComponent as FangLogo } from '@/assets/fang.svg'
 import './App.css'
 
 function App() {
 	const [count, setCount] = useState(0)
-	console.log(import.meta.env.VITE_IMG_BASE_URL, test())
+	console.log(import.meta.env.VITE_IMG_BASE_URL)
 
 	return (
 		<>
 			<div>
-				<a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-					{/* <ViteLogo className="logo" /> */}
-				</a>
+				<a href="https://vitejs.dev" target="_blank" rel="noreferrer"></a>
 				<a href="https://react.dev" target="_blank" rel="noreferrer">
-					{/* <FangLogo className="logo react" /> */}
-					{/* <img src={reactLogo} className="logo react" alt="React logo" /> */}
+					<FangLogo className="logo react" />
+					<img src={reactLogo} className="logo react" alt="React logo" />
 				</a>
 			</div>
 			<h1>Vite + React</h1>{' '}

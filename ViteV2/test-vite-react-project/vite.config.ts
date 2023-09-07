@@ -14,6 +14,28 @@ export default defineConfig(({ command, mode }) => {
 	const isDev = mode === 'development'
 	return {
 		mode,
+		envDir: transformNormalizePath(resolve, __dirname, './config'), // .env 文件的位置
+		server: {
+			open: true
+		},
+		resolve: {
+			alias: {
+				'@': transformNormalizePath(join, __dirname, './src')
+			}
+		},
+		publicDir: transformNormalizePath(join, __dirname, './public'),
+		optimizeDeps: {
+			// 强制进行预构建
+			include: ['react', 'react-dom']
+		},
+		build: {
+			target: 'es2020',
+			sourcemap: false,
+			assetsInlineLimit: 4096, //小于此阈值 kb 的导入或引用资源将内联为 base64 编码
+			rollupOptions: {
+				...(!isDev && prodBuildConfig())
+			}
+		},
 		plugins: [
 			react({
 				// babel: {
@@ -26,28 +48,7 @@ export default defineConfig(({ command, mode }) => {
 			viteEslint(),
 			svgr(),
 			isDev ? devPlugins() : prodPlugins()
-		],
-		envDir: transformNormalizePath(resolve, __dirname, './'), // .env 文件的位置
-		resolve: {
-			alias: {
-				// '@': transformNormalizePath(join, __dirname, '../src')
-				'@': '../src'
-			}
-		},
-		optimizeDeps: {
-			// 强制进行预构建
-			include: ['react', 'react-dom']
-		},
-		publicDir: transformNormalizePath(join, __dirname, '../public'),
-		build: {
-			// target: 'es2020',
-			// sourcemap: false,
-			// assetsInlineLimit: 4096, //小于此阈值 kb 的导入或引用资源将内联为 base64 编码
-			rollupOptions: {
-				external: ['@/utils/index.ts'],
-				...(!isDev && prodBuildConfig())
-			}
-		}
+		]
 	}
 })
 
