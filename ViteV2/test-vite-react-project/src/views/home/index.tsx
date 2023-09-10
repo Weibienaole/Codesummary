@@ -4,6 +4,7 @@ const Home = () => {
 	return (
 		<div>
 			home
+			<span className="s">text</span>
 			<Outlet />
 		</div>
 	)

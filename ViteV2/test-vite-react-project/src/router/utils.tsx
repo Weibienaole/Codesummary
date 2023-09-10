@@ -19,26 +19,17 @@ export const generateRouters = (
 	for (let index = 0; index < raw.length; index++) {
 		const rawRoute = raw[index]
 		const hasChildren = (rawRoute.children as IRawRouter[])?.length > 0
-		let Dynamic: any
 		if (!rawRoute.nest && hasChildren) {
 			// 不是嵌套路由，只是上下级
 			;(raw[index].children as IRawRouter[]).unshift({
 				index: true,
 				module: rawRoute.module,
 				params: rawRoute.params
-				// module: rawRoute.default || rawRoute.module
 			})
 			delete raw[index].module
 			delete raw[index].params
-		} else {
-			Dynamic = lazy(
-				(p: { modulePath: string }) =>
-					import(/* @vite-ignore */ `../views/${p.modulePath}`)
-			)
-			// Dynamic = lazy(
-			// 	() => import(/* @vite-ignore */ `../views/${rawRoute.module}`)
-			// )
 		}
+
 		const currentPaths = [...paths]
 		if (rawRoute.key) {
 			if (currentPaths.length === 0) {
@@ -47,11 +38,14 @@ export const generateRouters = (
 				currentPaths.push(normalizedKey(rawRoute.key))
 			}
 		}
+
+		const Element = lazy(rawRoute.module) as any
+
 		filterRoutes.push({
 			...rawRoute,
 			path: currentPaths.join('/'),
 			element: rawRoute.module ? (
-				<Dynamic modulePath={rawRoute.module} routeParams={rawRoute.params} />
+				<Element routeParams={rawRoute.params} />
 			) : null,
 			children: rawRoute.children
 				? generateRouters(rawRoute.children, [], currentPaths)

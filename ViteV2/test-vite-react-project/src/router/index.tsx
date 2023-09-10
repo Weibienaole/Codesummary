@@ -10,8 +10,7 @@ const staticRoutes = generateRouters(rawRoutes)
 export const baseRoute: RouteObject[] = [
 	{
 		path: '/',
-		element: <Core />,
-		children: []
+		element: <Core />
 	},
 	// {
 	//   path: '/login',

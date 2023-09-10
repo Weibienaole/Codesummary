@@ -1,10 +1,10 @@
+// import { ReactNode } from 'react'
+
 export interface IRawRouter {
-	path?: string
 	key?: string
-	module?: string
+	module?: any
 	index?: boolean
 	nest?: boolean
-	hidden?: boolean
 	params?: IRawRouteParams
 	children?: IRawRouter[]
 }

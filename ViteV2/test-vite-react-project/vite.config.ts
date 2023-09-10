@@ -34,15 +34,26 @@ export default defineConfig((props) => {
 			}
 		},
 		publicDir: transformNormalizePath(join, __dirname, './public'),
-		// css: {
-		// 	postcss: {
-		// 		plugins: [
-		// 			autoprefixer({
-		// 				overrideBrowserslist: ['Chrome > 40', 'ff > 31', 'ie 11']
-		// 			})
-		// 		]
-		// 	}
-		// },
+		server: {
+			port: 8000
+		},
+		css: {
+			postcss: {
+				plugins: [
+					autoprefixer({
+						overrideBrowserslist: [
+							'Android 4.1',
+							'iOS 7.1',
+							'Chrome > 31',
+							'ff > 31',
+							'ie >= 8',
+							'> 1%'
+						],
+						grid: true
+					})
+				]
+			}
+		},
 		optimizeDeps: {
 			// 强制进行预构建
 			include: ['react', 'react-dom']
