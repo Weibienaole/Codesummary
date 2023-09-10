@@ -1,18 +1,7 @@
-import { useCreateOutletEl } from '@/utils'
-import {
-	Outlet,
-	Link,
-	useNavigate,
-	useNavigation,
-	useMatches,
-	useOutlet
-} from 'react-router-dom'
+import { Outlet, Link, useNavigate } from 'react-router-dom'
+
 const Docs = (props) => {
 	const navigate = useNavigate()
-	const navigation = useNavigation()
-	const route = useMatches()
-	const outlet = useCreateOutletEl()
-	//console.log(route, navigation, outlet)
 	console.log(props, 'props')
 
 	return (
@@ -26,8 +15,9 @@ const Docs = (props) => {
 				go child
 			</div>
 			<Link to={'/docs/child'}>link childDOcs</Link>
+			<Link to={'/docs/child2'}>link childDOcs2</Link>
 			<Link to={'/cos/child'}>link cos</Link>
-			{outlet}
+			<Outlet />
 		</div>
 	)
 }

@@ -1,8 +1,15 @@
 import { join, resolve } from 'path'
-import { defineConfig, normalizePath, mergeConfig } from 'vite'
+import {
+	defineConfig,
+	normalizePath,
+	mergeConfig,
+	UserConfig,
+	loadEnv
+} from 'vite'
 import react from '@vitejs/plugin-react'
 import viteEslint from 'vite-plugin-eslint' // eslint
 import svgr from 'vite-plugin-svgr' // svg组件化
+import autoprefixer from 'autoprefixer'
 
 import prodConfig from './config/prod.config'
 import devConfig from './config/dev.config'
@@ -14,8 +21,12 @@ const transformNormalizePath = (fn, ...val) => {
 export default defineConfig((props) => {
 	const { mode } = props
 	const isProd = mode === 'production'
-	const baseConfig = {
+	const root = process.cwd()
+	const env = loadEnv(mode, root)
+	const baseConfig: UserConfig = {
+		root,
 		mode,
+		base: '',
 		envDir: transformNormalizePath(resolve, __dirname, './config'), // .env 文件的位置
 		resolve: {
 			alias: {
@@ -23,6 +34,15 @@ export default defineConfig((props) => {
 			}
 		},
 		publicDir: transformNormalizePath(join, __dirname, './public'),
+		// css: {
+		// 	postcss: {
+		// 		plugins: [
+		// 			autoprefixer({
+		// 				overrideBrowserslist: ['Chrome > 40', 'ff > 31', 'ie 11']
+		// 			})
+		// 		]
+		// 	}
+		// },
 		optimizeDeps: {
 			// 强制进行预构建
 			include: ['react', 'react-dom']
@@ -37,12 +57,12 @@ export default defineConfig((props) => {
 		},
 		plugins: [
 			react({
-				// babel: {
-				// 	plugins: [
-				// 		// 适配 styled-component
-				// 		'babel-plugin-styled-components'
-				// 	]
-				// }
+				babel: {
+					plugins: [
+						// 适配 styled-component
+						'babel-plugin-styled-components'
+					]
+				}
 			}),
 			viteEslint(),
 			svgr()

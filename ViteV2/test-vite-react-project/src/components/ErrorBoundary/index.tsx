@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 /*
  错误边界
   1.请在App.js中用此组件将 Route组件包裹即可展示错误之后的UI信息
@@ -32,7 +32,7 @@ export default class ErrorBoundary extends Component<Props, State> {
 			JSON.stringify(error)
 		)
 	}
-	render() {
+	render(): any {
 		if (this.state.hasError)
 			return (
 				<div style={style} className="errorBoundary-component_zzyDevtools">

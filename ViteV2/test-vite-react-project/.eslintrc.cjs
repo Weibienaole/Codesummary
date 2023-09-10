@@ -13,6 +13,7 @@ module.exports = {
   ],
   globals:{
     // 全局变量声明
+    // '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__': false
     /*
       "writable"或者 true，表示变量可重写；
       "readonly"或者false，表示变量不可重写；
@@ -30,7 +31,7 @@ module.exports = {
   },
   plugins: ['react-refresh', '@typescript-eslint', 'react', 'react-hooks', '@typescript-eslint', 'prettier'],
   rules: {
-    '@typescript-eslint/no-explicit-any': 'warn', // 使用any类型
+    '@typescript-eslint/no-explicit-any': 'off', // 使用any类型
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
