@@ -1,9 +1,14 @@
 import { Suspense, useLayoutEffect, useState } from 'react'
 import { RouteObject, RouterProvider, createHashRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 import './App.css'
-import { baseRoute, staticRoutes } from './router'
+
 import { deepClone } from './utils'
+
+import { baseRoute, staticRoutes } from './router'
+import store from './store'
+
 import GlobalStyle from './style'
 
 const App = () => {
@@ -19,6 +24,7 @@ const App = () => {
 		if (findIndex >= 0) {
 			cloneRoutes[findIndex].children = routes
 		}
+
 		setRoutes(cloneRoutes)
 	}
 
@@ -27,10 +33,12 @@ const App = () => {
 			{/*<ErrorBoundary
 				mode={import.meta.env.MODE as 'development' | 'production'}
 			>*/}
-			<Suspense fallback={<span style={{ color: '#000' }}>loading...</span>}>
+			<Provider store={store}>
 				<GlobalStyle />
-				<RouterProvider router={createHashRouter(ruotes)} />
-			</Suspense>
+				<Suspense fallback={<span style={{ color: '#000' }}>loading...</span>}>
+					<RouterProvider router={createHashRouter(ruotes)} />
+				</Suspense>
+			</Provider>
 			{/*</ErrorBoundary>*/}
 		</>
 	)

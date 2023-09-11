@@ -1,9 +1,9 @@
-// import { combineReducers } from 'redux-immutable'
+import { combineReducers } from 'redux-immutable'
 
-// import { reducer as coreReducer } from '../page/core/store'
+import { reducer as coreReducer } from '@/views/core/store'
 
-// const reducer = combineReducers({
-// 	core: coreReducer
-// })
+const reducer = combineReducers({
+	core: coreReducer
+})
 
-// export default reducer
+export default reducer

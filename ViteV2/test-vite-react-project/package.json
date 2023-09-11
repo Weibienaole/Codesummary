@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@loadable/component": "^5.15.3",
+    "axios": "^1.5.0",
     "immutable": "4.3.4",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "8.1.2",
@@ -56,16 +58,5 @@
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china"
-  },
-  "browserslist": {
-    "production": [
-      ">1%",
-      "not dead"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

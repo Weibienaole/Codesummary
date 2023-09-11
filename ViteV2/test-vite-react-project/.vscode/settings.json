@@ -1,0 +1,25 @@
+{
+  // vscode默认启用了根据文件类型自动设置tabsize的选项
+  "editor.detectIndentation": false,
+  // 重新设定tabsize
+  "editor.tabSize": 2,
+  "eslint.format.enable": true,
+  //autoFix默认开启，只需输入字符串数组即可
+  "eslint.validate": ["javascript", "vue", "html"],
+  // #每次保存的时候自动格式化
+  "editor.formatOnSave": false,
+  // #每次保存的时候将代码按eslint格式进行修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  //  #让函数(名)和后面的括号之间加个空格
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  // 设置别名的引入路径----插件名称：path-intellisense
+  "path-intellisense.mappings": {
+    "@": "${workspaceFolder}/src",
+  },
+	// 回车时不插入空格，保证tab
+  "editor.insertSpaces": false,
+	// 注释时不插入空格
+	"editor.comments.insertSpace": false
+}

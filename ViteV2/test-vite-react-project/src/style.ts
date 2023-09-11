@@ -23,11 +23,13 @@ body {
   min-width: 320px;
   min-height: 100vh;
   line-height: 24px;
-  font-family: var(--island-font-family-base);
+  font-family: 'Inter var experimental', 'Inter var',
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: var(--island-c-text-1);
-  background-color: var(--island-c-bg);
+  color: #213547;
+  background-color: #ffffff;
   direction: ltr;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -107,7 +109,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--island-font-family-mono);
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 img,
@@ -181,17 +183,17 @@ input {
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: var(--island-c-text-3);
+  color: rgba(60, 60, 60, 0.33);
 }
 
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
-  color: var(--island-c-text-3);
+  color: rgba(60, 60, 60, 0.33);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--island-c-text-3);
+  color: rgba(152, 68, 68, 0.33);
 }
 
 input::-webkit-outer-spin-button,

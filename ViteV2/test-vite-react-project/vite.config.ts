@@ -41,14 +41,7 @@ export default defineConfig((props) => {
 			postcss: {
 				plugins: [
 					autoprefixer({
-						overrideBrowserslist: [
-							'Android 4.1',
-							'iOS 7.1',
-							'Chrome > 31',
-							'ff > 31',
-							'ie >= 8',
-							'> 1%'
-						],
+						overrideBrowserslist: ['>1%', 'not dead'],
 						grid: true
 					})
 				]
