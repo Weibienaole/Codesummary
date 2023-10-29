@@ -1,6 +1,6 @@
 import cac from 'cac'
 
-import { startDevServer } from '../../server'
+import { startDevServer } from './server'
 
 const root = process.cwd()
 

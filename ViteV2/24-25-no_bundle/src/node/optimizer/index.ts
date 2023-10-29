@@ -3,12 +3,13 @@ import path from 'path'
 import { green } from 'picocolors'
 
 import { scanPlugins } from './scanPlugin'
-import { PRE_BUNDLE_DIR } from '../constant'
+import { PRE_BUNDLE_DIR } from '../../constant'
 import { preBundlePlugin } from './preBundlePlugin'
 
 export const optimizer = async (root) => {
   // 1. 确定入口
   const entry = path.resolve(root, 'src/main.tsx')
+  
   // 2. 从入口处扫描依赖
   const deps = new Set<string>()
   await build({
@@ -33,4 +34,6 @@ export const optimizer = async (root) => {
     outdir: path.resolve(root, PRE_BUNDLE_DIR),
     plugins: [await preBundlePlugin(deps)]
   })
+  console.log('构建成功！');
+  
 }

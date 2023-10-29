@@ -4,11 +4,11 @@ import resolve from 'resolve'
 import { init, parse } from 'es-module-lexer'
 import fs from 'fs-extra'
 
-import { BARE_IMPORT_RE } from '../constant'
+import { BARE_IMPORT_RE } from '../../constant'
 import { normalizePath } from '../utils'
-// import createDebug from 'debug'
+import createDebug from 'debug'
 
-// const debug = createDebug('dev')
+const debug = createDebug('dev')
 
 export async function preBundlePlugin(deps: Set<string>): Promise<Plugin> {
   return Promise.resolve({
@@ -35,7 +35,7 @@ export async function preBundlePlugin(deps: Set<string>): Promise<Plugin> {
         const id = loadInfo.path
         const entryPath = normalizePath(resolve.sync(id, { basedir: root }))
         const entryFile = await fs.readFile(entryPath, 'utf-8')
-        const [imports, exports] = await parse(entryPath)
+        const [imports, exports] = await parse(entryFile)
         const proxyModules: string[] = []
         if (!imports.length && !exports.length) {
           // cjs
@@ -52,7 +52,7 @@ export async function preBundlePlugin(deps: Set<string>): Promise<Plugin> {
           }
           proxyModules.push(`export * from '${entryPath}'`)
         }
-        // debug('代理模块内容: %o:\n ' + proxyModules.join('\n'))
+        debug('代理模块内容: %o:\n ' + proxyModules.join('\n'))
         const loader = path.extname(entryPath).slice(1) as Loader
         return {
           loader,
