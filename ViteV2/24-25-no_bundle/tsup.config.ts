@@ -1,9 +1,10 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  // 后续会增加 entry
   entry: {
+    // 入口
     index: 'src/node/cli.ts',
+    // 客户端
     client: 'src/client/client.ts'
   },
   // 产物格式，包含 esm 和 cjs 格式
