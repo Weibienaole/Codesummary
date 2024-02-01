@@ -1,0 +1,5 @@
+D:/Code/pro/CanvasCom/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/pages/Index.js;com.example.canvascom/entry/ets/pages/Index;esm;entry/src/main/ets/pages/Index.ets;entry
+D:/Code/pro/CanvasCom/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/entryability/EntryAbility.js;com.example.canvascom/entry/ets/entryability/EntryAbility;esm;entry/src/main/ets/entryability/EntryAbility.ts;entry
+D:/Code/pro/CanvasCom/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/DrawModel/drawModel.js;com.example.canvascom/entry/ets/DrawModel/drawModel;esm;entry/src/main/ets/DrawModel/drawModel.ets;entry
+D:/Code/pro/CanvasCom/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/DrawModel/type.js;com.example.canvascom/entry/ets/DrawModel/type;esm;entry/src/main/ets/DrawModel/type.ets;entry
+D:/Code/pro/CanvasCom/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/constants/index.js;com.example.canvascom/entry/ets/constants/index;esm;entry/src/main/ets/constants/index.ets;entry

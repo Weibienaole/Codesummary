@@ -1,0 +1,5 @@
+D:/Code/pro/Photo/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/pages/Index.js;com.example.photo/entry/ets/pages/Index;esm;entry/src/main/ets/pages/Index.ets;entry
+D:/Code/pro/Photo/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/pages/PhotoList.js;com.example.photo/entry/ets/pages/PhotoList;esm;entry/src/main/ets/pages/PhotoList.ets;entry
+D:/Code/pro/Photo/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/entryability/EntryAbility.js;com.example.photo/entry/ets/entryability/EntryAbility;esm;entry/src/main/ets/entryability/EntryAbility.ts;entry
+D:/Code/pro/Photo/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/pages/DetailList.js;com.example.photo/entry/ets/pages/DetailList;esm;entry/src/main/ets/pages/DetailList.ets;entry
+D:/Code/pro/Photo/entry/build/default/cache/default/default@CompileArkTS/esmodule/debug/entry/src/main/ets/common/Constant.js;com.example.photo/entry/ets/common/Constant;esm;entry/src/main/ets/common/Constant.ets;entry

@@ -1,0 +1,7 @@
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/entryability/EntryAbility.js;com.example.targetmanagementv2/entry/ets/entryability/EntryAbility;esm;entry/src/main/ets/entryability/EntryAbility.ts;entry
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/pages/Index.js;com.example.targetmanagementv2/entry/ets/pages/Index;esm;entry/src/main/ets/pages/Index.ets;entry
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/Common/utils.js;com.example.targetmanagementv2/entry/ets/Common/utils;esm;entry/src/main/ets/Common/utils.ets;entry
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/dataModel/TargetDataModel.js;com.example.targetmanagementv2/entry/ets/dataModel/TargetDataModel;esm;entry/src/main/ets/dataModel/TargetDataModel.ets;entry
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/view/TargetsList.js;com.example.targetmanagementv2/entry/ets/view/TargetsList;esm;entry/src/main/ets/view/TargetsList.ets;entry
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/view/addDialog.js;com.example.targetmanagementv2/entry/ets/view/addDialog;esm;entry/src/main/ets/view/addDialog.ets;entry
+D:/Code/pro/TargetManagementV2/entry/.preview/cache/entry/src/main/ets/view/ProgressEditBar.js;com.example.targetmanagementv2/entry/ets/view/ProgressEditBar;esm;entry/src/main/ets/view/ProgressEditBar.ets;entry
