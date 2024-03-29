@@ -11,7 +11,7 @@
     "build:ssg": "npm run build && NODE_ENV=production esno scripts/ssg.ts"
   },
   "dependencies": {
-    "express": "^4.17.3",
+    "express": "^4.19.2",
     "happy-dom": "^2.45.0",
     "jsdom": "^19.0.0",
     "react": "^17.0.2",
